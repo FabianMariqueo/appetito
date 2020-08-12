@@ -31,11 +31,6 @@ class SignInPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const SizedBox(height: 32.0),
-              Text(
-                "Email",
-                style: TextStyle(fontSize: 14.0, color: Colors.black87),
-                textAlign: TextAlign.center,
-              ),
               TextFormField(
                 decoration: const InputDecoration(
                     labelText: 'Ingrese su usuario o email',
@@ -46,11 +41,6 @@ class SignInPage extends StatelessWidget {
                     val.length < 6 ? 'Password too short.' : null,
                 onSaved: (val) => _password = val,
                 obscureText: true,
-              ),
-              Text(
-                "Passwords",
-                style: TextStyle(fontSize: 14.0, color: Colors.black87),
-                textAlign: TextAlign.center,
               ),
               new TextFormField(
                 decoration: const InputDecoration(
