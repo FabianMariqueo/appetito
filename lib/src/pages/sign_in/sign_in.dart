@@ -1,12 +1,23 @@
 import 'dart:math';
 
+import 'package:appetito/src/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  static String tag = '/signin';
+
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   static String tag = '/signin';
 
   String _password;
+
+  // Servicio de Authentication
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +65,10 @@ class SignInPage extends StatelessWidget {
                 obscureText: true,
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  dynamic result = await _authService.signInAnon();
+                  print(result);
+                },
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(0.0),
                 child: Container(
