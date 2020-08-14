@@ -1,5 +1,5 @@
 import 'package:appetito/src/pages/app.dart';
-import 'package:appetito/src/pages/sign_in/sign_in.dart';
+import 'package:appetito/src/pages/authentication/sign_in.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/routes/routes.dart';
