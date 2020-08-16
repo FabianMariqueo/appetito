@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:appetito/src/models/user.dart';
 import 'package:appetito/src/services/auth.dart';
+import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatefulWidget {
@@ -20,14 +21,21 @@ class _SignInPageState extends State<SignInPage> {
 
   // Servicio de Authentication
   final AuthService _authService = AuthService();
+
   // Modelo de datos del usuario
   final User _user = User();
+
   // Validar formulario
   final _formKey = GlobalKey<FormState>();
 
+  // Indicador loading
+  bool _loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return this._loading
+        ? Loading()
+        : Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -71,12 +79,16 @@ class _SignInPageState extends State<SignInPage> {
                   const SizedBox(height: 32.0),
                   TextFormField(
                     decoration: const InputDecoration(
-                        labelText: 'Ingrese su usuario o email',
+                        labelText: 'Ingrese su Email',
                         icon: const Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: const Icon(Icons.person))),
-                    onSaved: (val) => _user.email = val,
-                    obscureText: true,
+                    validator: (val) =>
+                    val.isEmpty ? 'Complete el Email' : null,
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (val) {
+                      setState(() => _user.email = val);
+                    },
                   ),
                   new TextFormField(
                     decoration: const InputDecoration(
@@ -85,8 +97,10 @@ class _SignInPageState extends State<SignInPage> {
                             padding: const EdgeInsets.only(top: 15.0),
                             child: const Icon(Icons.lock))),
                     validator: (val) =>
-                        val.length < 6 ? 'Password too short.' : null,
-                    onSaved: (val) => _user.password = val,
+                    val.length < 6 ? 'Password too short.' : null,
+                    onChanged: (val) {
+                      setState(() => _user.password = val);
+                    },
                     obscureText: true,
                   ),
                   const SizedBox(height: 10.0),
@@ -95,8 +109,17 @@ class _SignInPageState extends State<SignInPage> {
                     children: <Widget>[
                       RaisedButton(
                         onPressed: () async {
-                          dynamic result = await _authService.signInAnon();
-                          print(result);
+                          if (_formKey.currentState.validate()) {
+                            setState(() {
+                              this._loading = true;
+                            });
+                            dynamic result =
+                            _authService.signInWithEmailAndPassword(_user);
+                            if (result == null) {
+                              print("Error");
+                              this._loading = false;
+                            }
+                          }
                         },
                         textColor: Colors.white,
                         padding: const EdgeInsets.all(0.0),

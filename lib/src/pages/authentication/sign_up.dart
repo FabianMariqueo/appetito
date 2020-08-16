@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:appetito/src/models/user.dart';
 import 'package:appetito/src/services/auth.dart';
+import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -26,35 +27,39 @@ class _SignUpPageState extends State<SignUpPage> {
   // Modelo de datos para el usuario
   final User _user = User();
 
+  bool _loading = false;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Appetito"),
-            Text("Registro"),
-            _registerInput(),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("¿Ya tienes una cuenta?"),
-                FlatButton(
-                  onPressed: () {
-                    widget.toogleView();
-                  },
-                  child: Text(
-                    "Ingresar",
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+    return this._loading
+        ? Loading()
+        : Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Appetito"),
+                  Text("Registro"),
+                  _registerInput(),
+                  const SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("¿Ya tienes una cuenta?"),
+                      FlatButton(
+                        onPressed: () {
+                          widget.toogleView();
+                        },
+                        child: Text(
+                          "Ingresar",
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
   }
 
   Widget _registerInput() {
@@ -72,12 +77,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(height: 32.0),
                   TextFormField(
                     decoration: const InputDecoration(
-                        labelText: 'Ingrese su usuario o email',
+                        labelText: 'Ingrese su Email',
                         icon: const Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: const Icon(Icons.person))),
                     validator: (val) =>
                         val.isEmpty ? 'Complete el Email' : null,
+                    keyboardType: TextInputType.emailAddress,
                     onChanged: (val) {
                       setState(() => _user.email = val);
                     },
@@ -102,10 +108,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       RaisedButton(
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
+                            this._loading = true;
                             dynamic result = _authService
                                 .registerWithEmailAndPassword(_user);
                             if (result == null) {
                               print("Error");
+                              this._loading = false;
                             }
                           }
                         },
