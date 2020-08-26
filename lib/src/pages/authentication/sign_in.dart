@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:appetito/src/models/user.dart';
+import 'package:appetito/src/pages/home/home.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -36,32 +37,33 @@ class _SignInPageState extends State<SignInPage> {
     return this._loading
         ? Loading()
         : Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("Appetito"),
-            Text("Login"),
-            _loginInput(),
-            const SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("¿No tienes una cuenta?"),
-                FlatButton(
-                  onPressed: () {
-                    widget.toogleView();
-                  },
-                  child: Text(
-                    "Registrarse",
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("Appetito"),
+                  Text("Login"),
+                  _loginInput(),
+                  const SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("¿No tienes una cuenta?"),
+                      FlatButton(
+                        onPressed: () {
+                          widget.toogleView();
+                        },
+                        child: Text(
+                          "Registrarse",
+                        ),
+                      )
+                    ],
                   ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+                  _signInWithGoogle()
+                ],
+              ),
+            ),
+          );
   }
 
   Widget _loginInput() {
@@ -84,7 +86,7 @@ class _SignInPageState extends State<SignInPage> {
                             padding: const EdgeInsets.only(top: 15.0),
                             child: const Icon(Icons.person))),
                     validator: (val) =>
-                    val.isEmpty ? 'Complete el Email' : null,
+                        val.isEmpty ? 'Complete el Email' : null,
                     keyboardType: TextInputType.emailAddress,
                     onChanged: (val) {
                       setState(() => _user.email = val);
@@ -97,7 +99,7 @@ class _SignInPageState extends State<SignInPage> {
                             padding: const EdgeInsets.only(top: 15.0),
                             child: const Icon(Icons.lock))),
                     validator: (val) =>
-                    val.length < 6 ? 'Password too short.' : null,
+                        val.length < 6 ? 'Password too short.' : null,
                     onChanged: (val) {
                       setState(() => _user.password = val);
                     },
@@ -114,7 +116,7 @@ class _SignInPageState extends State<SignInPage> {
                               this._loading = true;
                             });
                             dynamic result =
-                            _authService.signInWithEmailAndPassword(_user);
+                                _authService.signInWithEmailAndPassword(_user);
                             if (result == null) {
                               print("Error");
                               this._loading = false;
@@ -145,6 +147,53 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ));
       }),
+    );
+  }
+
+  Widget _signInWithGoogle() {
+    return OutlineButton(
+      splashColor: Colors.grey,
+      onPressed: () {
+        print("Login google");
+
+        setState(() {
+          this._loading = true;
+        });
+
+        _authService.signInWithGoogle().whenComplete(() {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return HomePage();
+              },
+            ),
+          );
+        });
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      highlightElevation: 0,
+      borderSide: BorderSide(color: Colors.grey),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image(
+                image: AssetImage("assets/img/google_logo.png"), height: 35.0),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'Sign in with Google',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
