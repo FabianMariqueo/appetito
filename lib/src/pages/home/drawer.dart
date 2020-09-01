@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:appetito/src/utils/hex_to_color_util.dart';
+import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
 
 class DrawerPage extends StatelessWidget {
+
+  final AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -25,23 +28,23 @@ class DrawerPage extends StatelessWidget {
           ),
           ListTile(
             title: Text('Mis Recetas'),
-            leading: Icon(Icons.perm_contact_calendar),
+            leading: Icon(Icons.content_paste),
             onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
           ),
           ListTile(
             title: Text('Recetas Guardadas'),
-            leading: Icon(Icons.perm_contact_calendar),
+            leading: Icon(Icons.save),
             onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
           ),
           ListTile(
             title: Text('Lista Compra'),
-            leading: Icon(Icons.perm_contact_calendar),
+            leading: Icon(Icons.list),
             onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
           ),
           ListTile(
             title: Text('Cerrar Sesión'),
-            leading: Icon(Icons.perm_contact_calendar),
-            onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
+            leading: Icon(Icons.power_settings_new),
+            onTap: () => this._authService.signOut(),
           ),
         ],
       ),

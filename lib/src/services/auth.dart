@@ -6,7 +6,7 @@ class AuthService {
   // Authentication de firebase
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = new GoogleSignIn(scopes: ['email']);
 
   // Function to get user from firebase object
   User _userFromFirebase(FirebaseUser user) {
@@ -48,9 +48,8 @@ class AuthService {
 
   Future signInWithGoogle() async {
     try {
-      print("##############################################################################");
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-      print("##############################################################################");
+
       print("google user");
       print(googleUser);
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;

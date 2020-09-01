@@ -13,15 +13,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Appettito'),
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text("Logout"),
-            onPressed: () async{
-              await _authService.signOut();
-            },
-          )
-        ],
       ),
       drawer: DrawerPage(),
       body: Text("Pataata"),

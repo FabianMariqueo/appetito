@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:appetito/src/models/user.dart';
-import 'package:appetito/src/pages/home/home.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -160,15 +159,11 @@ class _SignInPageState extends State<SignInPage> {
           this._loading = true;
         });
 
-        _authService.signInWithGoogle().whenComplete(() {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return HomePage();
-              },
-            ),
-          );
-        });
+        dynamic result = _authService.signInWithGoogle();
+        if (result == null) {
+          print("Error");
+          this._loading = false;
+        }
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       highlightElevation: 0,

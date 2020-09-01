@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "217636819554-gk0ri00aj8p8qton2ktghk98a2ct795s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cl.ufro.appetito",
+            "certificate_hash": "a164a740e2baffedebd7084c552c3e879dc385af"
+          }
+        },
+        {
           "client_id": "217636819554-0r7t0g1cbpi0jgksltkoebok69rr1dve.apps.googleusercontent.com",
           "client_type": 3
         }
