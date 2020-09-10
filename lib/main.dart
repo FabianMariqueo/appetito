@@ -4,7 +4,7 @@ import 'package:appetito/src/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/routes/routes.dart';
 import 'package:provider/provider.dart';
-import 'package:appetito/src/models/user.dart';
+import 'package:appetito/src/models/user-appetito.dart';
 
 void main() {
   runApp(MyApp());

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:appetito/src/models/user.dart';
+import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class _SignInPageState extends State<SignInPage> {
   final AuthService _authService = AuthService();
 
   // Modelo de datos del usuario
-  final User _user = User();
+  final UserAppetito _user = UserAppetito();
 
   // Validar formulario
   final _formKey = GlobalKey<FormState>();
