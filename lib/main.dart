@@ -17,9 +17,10 @@ class MyApp extends StatelessWidget {
     return StreamProvider<User>.value(
         value: AuthService().user,
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Appetito',
           theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.amber,
             visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
           //home: AppPage(),

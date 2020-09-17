@@ -1,5 +1,6 @@
 import 'package:appetito/src/models/user.dart';
 import 'package:appetito/src/pages/authentication/authentication.dart';
+import 'package:appetito/src/pages/authentication/welcome.dart';
 import 'package:appetito/src/pages/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ class AppPage extends StatelessWidget {
     final user = Provider.of<User>(context);
 
     if (user == null) {
-      return Authentication();
+      return WelcomePage();
     } else {
       return HomePage();
     }
