@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:appetito/src/models/user.dart';
+import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class _SignInPageState extends State<SignInPage> {
   final AuthService _authService = AuthService();
 
   // Modelo de datos del usuario
-  final User _user = User();
+  final UserAppetito _user = UserAppetito();
 
   // Validar formulario
   final _formKey = GlobalKey<FormState>();
@@ -40,10 +40,26 @@ class _SignInPageState extends State<SignInPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Appetito"),
-                  Text("Login"),
+                  _backButton(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/img/logo.png',
+                        height: 100,
+                        width: 100,
+                      ),
+                      Text(
+                        "Login",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _loginInput(),
-                  const SizedBox(height: 10.0),
+                  //const SizedBox(height: 5.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -53,12 +69,12 @@ class _SignInPageState extends State<SignInPage> {
                           widget.toogleView();
                         },
                         child: Text(
-                          "Registrarse",
+                          "Registrate",
                         ),
                       )
                     ],
                   ),
-                  _signInWithGoogle()
+                  _signInWithGoogle(),
                 ],
               ),
             ),
@@ -70,14 +86,14 @@ class _SignInPageState extends State<SignInPage> {
       child: LayoutBuilder(builder: (context, constraints) {
         return Container(
             width: min(constraints.maxWidth, 600),
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(40.0),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  const SizedBox(height: 32.0),
+                  //const SizedBox(height: 10.0),
                   TextFormField(
                     decoration: const InputDecoration(
                         labelText: 'Ingrese su Email',
@@ -93,18 +109,18 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                   new TextFormField(
                     decoration: const InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Contraseña',
                         icon: const Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: const Icon(Icons.lock))),
                     validator: (val) =>
-                        val.length < 6 ? 'Password too short.' : null,
+                        val.length < 6 ? 'Contraseña muy corta.' : null,
                     onChanged: (val) {
                       setState(() => _user.password = val);
                     },
                     obscureText: true,
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 20.0),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -122,22 +138,21 @@ class _SignInPageState extends State<SignInPage> {
                             }
                           }
                         },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        color: Colors.amber,
                         textColor: Colors.white,
                         padding: const EdgeInsets.all(0.0),
                         child: Container(
                           decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                Color(0xFF0D47A1),
-                                Color(0xFF1976D2),
-                                Color(0xFF42A5F5),
-                              ],
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            //color: Colors.amber,
                           ),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 25.0),
+                              vertical: 10.0, horizontal: 60.0),
                           child: const Text('Ingresar',
-                              style: TextStyle(fontSize: 20)),
+                              style: TextStyle(fontSize: 15)),
                         ),
                       ),
                     ],
@@ -175,17 +190,38 @@ class _SignInPageState extends State<SignInPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image(
-                image: AssetImage("assets/img/google_logo.png"), height: 35.0),
+                image: AssetImage("assets/img/google_logo.png"), height: 25.0),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                'Sign in with Google',
+                'Ingresa con Google',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 15,
                   color: Colors.grey,
                 ),
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _backButton() {
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+            ),
+            Text('Atrás',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
           ],
         ),
       ),

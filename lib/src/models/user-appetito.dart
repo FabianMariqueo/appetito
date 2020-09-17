@@ -1,7 +1,7 @@
-class User {
+class UserAppetito {
   final String uid;
   String email;
   String password;
 
-  User({this.uid});
+  UserAppetito({this.uid});
 }

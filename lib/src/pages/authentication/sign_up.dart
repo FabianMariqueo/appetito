@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:appetito/src/models/user.dart';
+import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
 
   // Modelo de datos para el usuario
-  final User _user = User();
+  final UserAppetito _user = UserAppetito();
 
   bool _loading = false;
 
@@ -38,10 +38,26 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Appetito"),
-                  Text("Registro"),
+                  _backButton(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/img/logo.png',
+                        height: 100,
+                        width: 100,
+                      ),
+                      Text(
+                        "Registro",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                   _registerInput(),
-                  const SizedBox(height: 10.0),
+                  //const SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -67,14 +83,14 @@ class _SignUpPageState extends State<SignUpPage> {
       child: LayoutBuilder(builder: (context, constraints) {
         return Container(
             width: min(constraints.maxWidth, 600),
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(40.0),
             child: Form(
               key: _formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  const SizedBox(height: 32.0),
+                  //const SizedBox(height: 32.0),
                   TextFormField(
                     decoration: const InputDecoration(
                         labelText: 'Ingrese su Email',
@@ -90,18 +106,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   new TextFormField(
                     decoration: const InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Contraseña',
                         icon: const Padding(
                             padding: const EdgeInsets.only(top: 15.0),
                             child: const Icon(Icons.lock))),
                     validator: (val) =>
-                        val.length < 6 ? 'Password muy corta.' : null,
+                        val.length < 6 ? 'Contraseña muy corta.' : null,
                     onChanged: (val) {
                       setState(() => _user.password = val);
                     },
                     obscureText: true,
                   ),
-                  const SizedBox(height: 10.0),
+                  const SizedBox(height: 20.0),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -117,22 +133,21 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
                           }
                         },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        color: Colors.amber,
                         textColor: Colors.white,
                         padding: const EdgeInsets.all(0.0),
                         child: Container(
                           decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                Color(0xFF0D47A1),
-                                Color(0xFF1976D2),
-                                Color(0xFF42A5F5),
-                              ],
-                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            //color: Colors.amber,
                           ),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 25.0),
+                              vertical: 10.0, horizontal: 60.0),
                           child: const Text('Registrar',
-                              style: TextStyle(fontSize: 20)),
+                              style: TextStyle(fontSize: 15)),
                         ),
                       ),
                     ],
@@ -141,6 +156,27 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ));
       }),
+    );
+  }
+
+  Widget _backButton() {
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+            ),
+            Text('Atrás',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+          ],
+        ),
+      ),
     );
   }
 }
