@@ -54,7 +54,7 @@ class AuthService {
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       print("google auth");
       print(googleAuth);
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
+      final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
       print("credential");
       print(credential);

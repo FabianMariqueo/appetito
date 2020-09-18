@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class RecipeService {
   addRecipe() async {
     //var firebaseUser = await FirebaseAuth.instance.currentUser;
-
+/**
     final firestoreInstance = FirebaseFirestore.instance;
     firestoreInstance.collection("users").add({
       "name": "john",
@@ -14,6 +14,7 @@ class RecipeService {
     }).then((value) {
       print(value.path);
     });
+    */
   }
 
   fetchAll() {}
