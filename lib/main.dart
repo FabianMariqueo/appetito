@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<FirebaseApp>(
         future: Firebase.initializeApp(),
-        builder: (context, snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
           return StreamProvider<UserAppetito>.value(
               value: AuthService().user,
               child: MaterialApp(
