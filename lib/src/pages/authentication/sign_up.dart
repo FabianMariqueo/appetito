@@ -16,8 +16,6 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  String _password;
-
   // Servicio de Authentication
   final AuthService _authService = AuthService();
 

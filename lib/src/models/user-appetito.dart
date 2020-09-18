@@ -2,6 +2,7 @@ class UserAppetito {
   final String uid;
   String email;
   String password;
-
-  UserAppetito({this.uid});
+  String nombre;
+  String photoURL;
+  UserAppetito({this.uid, this.nombre, this.email, this.photoURL});
 }

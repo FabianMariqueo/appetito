@@ -17,7 +17,6 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  static String tag = '/signin';
 
   // Servicio de Authentication
   final AuthService _authService = AuthService();

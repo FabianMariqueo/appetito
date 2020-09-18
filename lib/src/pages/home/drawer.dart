@@ -1,6 +1,8 @@
+import 'package:appetito/src/models/user-appetito.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
+import 'package:provider/provider.dart';
 
 class DrawerPage extends StatelessWidget {
 
@@ -8,6 +10,7 @@ class DrawerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserAppetito>(context);
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -19,7 +22,7 @@ class DrawerPage extends StatelessWidget {
                   fit: BoxFit.cover),
             ),
             child: Text(
-              'Mi super usuario',
+              user.nombre,
               style: TextStyle(
                 fontSize: 28.0,
                 color: Colors.black,
