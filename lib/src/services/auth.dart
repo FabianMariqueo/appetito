@@ -10,7 +10,13 @@ class AuthService {
 
   // Function to get user from firebase object
   UserAppetito _userFromFirebase(User user) {
-    return user != null ? UserAppetito(uid: user.uid) : null;
+    return user != null
+        ? UserAppetito(
+            uid: user.uid,
+            nombre: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL)
+        : null;
   }
 
   Stream<UserAppetito> get user {
@@ -59,6 +65,8 @@ class AuthService {
       print("credential");
       print(credential);
       UserCredential result = await _auth.signInWithCredential(credential);
+      print("Credential user");
+      print(result.user);
       return _userFromFirebase(result.user);
     } catch (e) {
       print(e.toString());
