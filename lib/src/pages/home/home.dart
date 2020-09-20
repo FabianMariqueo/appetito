@@ -38,6 +38,7 @@ class HomePage extends StatelessWidget {
 
   Widget _addButton(BuildContext context) {
     return FloatingActionButton(
+      splashColor: Colors.amberAccent,
       onPressed: () {
         Navigator.pushNamed(context, AddRecipePage.tag);
       },
@@ -63,24 +64,29 @@ class HomePage extends StatelessWidget {
     double Width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Image(
-              image: AssetImage("assets/img/drawer_img.jpg"),
-              fit: BoxFit.cover,
-              width: Width,
-              height: 100,
-            ),
-            ListTile(
-              title: Text('Nombre receta 1'),
-              subtitle: Text('Tiempo | Porciones'),
-            ),
-          ],
+      child: InkWell(
+        onTap: () {
+          print('nombre ultima receta');
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Image(
+                image: AssetImage("assets/img/drawer_img.jpg"),
+                fit: BoxFit.cover,
+                width: Width,
+                height: 100,
+              ),
+              ListTile(
+                title: Text('Nombre receta 1'),
+                subtitle: Text('Tiempo | Porciones'),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -132,15 +138,21 @@ class HomePage extends StatelessWidget {
             //Text(nombrecategoria),
           ),
         ),
-        Container(
-            alignment: Alignment.center,
-            child: Text(
-              nombrecategoria,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15.0),
-            )),
+        InkWell(
+          //para poder hacer tap en la categoria
+          onTap: () {
+            print(nombrecategoria);
+          },
+          child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                nombrecategoria,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0),
+              )),
+        ),
       ],
     );
   }
