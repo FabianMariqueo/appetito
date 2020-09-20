@@ -4,6 +4,7 @@ import 'package:appetito/src/services/recipe-service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 
 class AddRecipePage extends StatefulWidget {
   static String tag = "add_recipe";
@@ -44,26 +45,30 @@ class _AddRecipePage extends State<AddRecipePage> {
                   currentRecipe.portions, Icons.person_add),
             ),
             Container(
-                child: FlatButton(
-                    onPressed: () {
-                      DatePicker.showTimePicker(context, showTitleActions: true,
-                          onChanged: (date) {
-                        print('change $date');
-                      }, onConfirm: (date) {
-                        print('confirm $date');
-                        currentRecipe.preparationTime = date;
-                      },
-                          currentTime: DateTime.parse("0000-00-00 00:00:00"),
-                          locale: LocaleType.es);
-                    },
-                    child: Text(
-                      'Tiempo de preparación aproximado',
-                      style: TextStyle(color: Colors.blue),
-                    ))),
+                child: Column(
+              children: [
+                _timeInput(),
+                currentRecipe.preparationTime != null
+                    ? Text(DateFormat("HH:mm:ss")
+                        .format(currentRecipe.preparationTime))
+                    : Text("Seleccione tiempo de preparación"),
+              ],
+            )),
+            Container(
+              padding: EdgeInsets.all(20.0),
+              child: TextField(
+                decoration: InputDecoration(
+                    hintText: 'Ingrese una descripcion para su receta',
+                    labelText: "Descripción"),
+                onChanged: (value) => print(value),
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+              ),
+            ),
             Container(
               child: FlatButton(
                 child: Text("Send"),
-                onPressed: () => {this._recipeService.addRecipe()},
+                onPressed: () => {this._recipeService.addRecipe(currentRecipe)},
               ),
             )
           ],
@@ -90,5 +95,26 @@ class _AddRecipePage extends State<AddRecipePage> {
         },
       ),
     );
+  }
+
+  Widget _timeInput() {
+    return FlatButton(
+        onPressed: () {
+          DatePicker.showTimePicker(context, showTitleActions: true,
+              onChanged: (date) {
+            print('change $date');
+          }, onConfirm: (date) {
+            print('confirm $date');
+            setState(() {
+              currentRecipe.preparationTime = date;
+            });
+          },
+              currentTime: DateTime.parse("0000-00-00 00:00:00"),
+              locale: LocaleType.es);
+        },
+        child: Text(
+          'Tiempo de preparación aproximado',
+          style: TextStyle(color: Colors.blue),
+        ));
   }
 }
