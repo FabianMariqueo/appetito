@@ -2,7 +2,6 @@ import 'package:appetito/src/models/user-appetito.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
-import 'package:provider/provider.dart';
 import 'package:appetito/src/pages/home/home.dart';
 import 'package:provider/provider.dart';
 
