@@ -25,14 +25,24 @@ class _RecipeImages extends State<RecipeImages> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        OutlineButton(
-          onPressed: chooseImage,
-          child: Text('Choose Image'),
+        InkWell(
+          onTap: () {
+            chooseImage();
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.symmetric(vertical: 13),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                color: Colors.amber[700]),
+            child: Text(
+              'Seleccionar Imagen',
+              style: TextStyle(fontSize: 15, color: Colors.white),
+            ),
+          ),
         ),
-        SizedBox(
-          height: 20.0,
-        ),
-        showImages(),
+        widget.listaImagenes.length > 0 ? showImages() : showDefault(),
       ],
     );
   }
@@ -64,7 +74,7 @@ class _RecipeImages extends State<RecipeImages> {
                   )
                 ],
               );
-            } else {
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Container(
                   width: MediaQuery.of(context).size.width,
                   margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -73,10 +83,21 @@ class _RecipeImages extends State<RecipeImages> {
                     'cargando imagen',
                     style: TextStyle(fontSize: 16.0),
                   ));
+            } else {
+              widget.listaImagenes.remove(i);
+              return showDefault();
             }
           },
         );
       }).toList(),
+    );
+  }
+
+  Widget showDefault() {
+    return Image.asset(
+      'assets/img/logo.png',
+      height: 100,
+      width: 100,
     );
   }
 }
