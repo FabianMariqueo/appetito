@@ -63,11 +63,14 @@ flutter:
     - assets/img/drawer_img.jpg
     - assets/img/logo.png
     - assets/img/logo letras.png
+    - assets/img/logo titulo.png
     - assets/img/fondo arriba.png
     - assets/img/fondo abajo.png
-    - assets/img/user1.png
-    - assets/img/user2.png
-    - assets/img/user3.png
+    - assets/img/user_default.png
+    - assets/img/caldos.jpg
+    - assets/img/carnes.jpg
+    - assets/img/reposteria.jpg
+    - assets/img/pan.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

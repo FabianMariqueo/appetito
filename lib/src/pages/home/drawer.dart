@@ -2,7 +2,6 @@ import 'package:appetito/src/models/user-appetito.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
-import 'package:provider/provider.dart';
 import 'package:appetito/src/pages/home/home.dart';
 import 'package:provider/provider.dart';
 
@@ -16,13 +15,15 @@ class DrawerPage extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text('Nombre'),
-            accountEmail: Text('email@gmail.com'),
+            accountName: Text(user.email.substring(0, user.email.indexOf('@'))),
+            accountEmail: Text(user.email),
             currentAccountPicture: CircleAvatar(
               backgroundColor: Colors.blue,
               child: Text(
-                "N",
-                style: TextStyle(fontSize: 30),
+                "${user.email.substring(0, 1)}".toUpperCase(),
+                style: TextStyle(
+                  fontSize: 30,
+                ),
               ),
             ),
           ),
