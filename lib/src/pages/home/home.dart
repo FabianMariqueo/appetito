@@ -23,7 +23,6 @@ class HomePage extends StatelessWidget {
           child: Container(
             child: ListView(
               children: <Widget>[
-                _addButton(context),
                 _titulo('Última receta publicada'),
                 _ultimaReceta(context),
                 _titulo('Categorías'),
@@ -33,6 +32,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: _addButton(context),
     );
   }
 

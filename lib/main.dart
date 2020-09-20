@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         });
   }
 
+// Widget con la aplicacion principal
   Widget _mainApp() {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
+// Widget con la página cuando está cargando la aplicacion de firebase
   Widget _loadingApp() {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
