@@ -2,10 +2,17 @@ import 'package:appetito/src/models/user-appetito.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
+<<<<<<< Updated upstream
 import 'package:provider/provider.dart';
+=======
+<<<<<<< HEAD
+import 'package:appetito/src/pages/home/home.dart';
+=======
+import 'package:provider/provider.dart';
+>>>>>>> develop
+>>>>>>> Stashed changes
 
 class DrawerPage extends StatelessWidget {
-
   final AuthService _authService = AuthService();
 
   @override
@@ -14,6 +21,16 @@ class DrawerPage extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
+<<<<<<< HEAD
+          UserAccountsDrawerHeader(
+            accountName: Text('Nombre'),
+            accountEmail: Text('email@gmail.com'),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.blue,
+              child: Text(
+                "N",
+                style: TextStyle(fontSize: 30),
+=======
           DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.blue[300],
@@ -26,8 +43,19 @@ class DrawerPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 28.0,
                 color: Colors.black,
+>>>>>>> develop
               ),
             ),
+          ),
+          ListTile(
+            title: Text('Inicio'),
+            leading: Icon(Icons.person),
+            onTap: () => Navigator.pushNamed(context, HomePage.tag),
+          ),
+          ListTile(
+            title: Text('Mi perfil'),
+            leading: Icon(Icons.person),
+            onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
           ),
           ListTile(
             title: Text('Mis Recetas'),
@@ -43,6 +71,9 @@ class DrawerPage extends StatelessWidget {
             title: Text('Lista Compra'),
             leading: Icon(Icons.list),
             onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
+          ),
+          Divider(
+            thickness: 5.0,
           ),
           ListTile(
             title: Text('Cerrar Sesión'),
