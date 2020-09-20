@@ -1,5 +1,5 @@
-
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
+import 'package:appetito/src/pages/home/home.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appetito/src/pages/app.dart';
@@ -13,6 +13,7 @@ Map<String, WidgetBuilder> getRoutes() {
     SignInPage.tag: (context) => SignInPage(),
     SignUpPage.tag: (context) => SignUpPage(),
     ProfilePage.tag: (context) => ProfilePage(),
-    AddRecipePage.tag: (context) => AddRecipePage()
+    AddRecipePage.tag: (context) => AddRecipePage(),
+    HomePage.tag: (context) => HomePage(),
   };
 }
