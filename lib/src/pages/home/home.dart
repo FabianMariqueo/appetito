@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  static String tag = '/home';  
+  static String tag = '/home';
 
   @override
   Widget build(BuildContext context) {
-     // Datos del usuario logeado
+    // Datos del usuario logeado
     final user = Provider.of<UserAppetito>(context);
 
     return Scaffold(
@@ -17,9 +17,7 @@ class HomePage extends StatelessWidget {
           title: Text('Appettito'),
         ),
         drawer: DrawerPage(),
-        body: Column(children: [
-          Text(user.nombre),
-          _addButton(context)]));
+        body: Column(children: [Text(user.email), _addButton(context)]));
   }
 
   Widget _addButton(BuildContext context) {
