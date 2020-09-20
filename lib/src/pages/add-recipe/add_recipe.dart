@@ -1,5 +1,6 @@
 import 'package:appetito/src/models/recipe.dart';
 import 'package:appetito/src/pages/add-recipe/recipe_images.dart';
+import 'package:appetito/src/pages/add-recipe/recipe_ingredients.dart';
 import 'package:appetito/src/services/recipe-service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,42 +34,68 @@ class _AddRecipePage extends State<AddRecipePage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              child: this._createInput("Titulo", "Ingrese titulo de la receta",
-                  currentRecipe.name, Icons.local_dining),
+            Card(
+              margin: EdgeInsets.all(15.0),
+              elevation: 3.0,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: RecipeImages(listaImagenes: listaImagenes)),
+                  Container(
+                    child: this._createInput(
+                        "Titulo",
+                        "Ingrese titulo de la receta",
+                        currentRecipe.name,
+                        Icons.local_dining),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: 'Ingrese una descripcion para su receta',
+                          labelText: "Descripción"),
+                      onChanged: (value) => print(value),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                    ),
+                  ),
+                  Container(
+                    child: this._createInput(
+                        "Porciones",
+                        "Cantidad de porciones",
+                        currentRecipe.portions,
+                        Icons.person_add),
+                  ),
+                  Container(
+                      padding: EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Tiempo de preparación:',
+                            style: TextStyle(color: Colors.black87),
+                          ),
+                          _timeInput(),
+                        ],
+                      )),
+                ],
+              ),
             ),
-            Container(
-                padding: EdgeInsets.all(8.0),
-                child: RecipeImages(listaImagenes: this.listaImagenes)),
-            Container(
-              child: this._createInput("Porciones", "Cantidad de porciones",
-                  currentRecipe.portions, Icons.person_add),
-            ),
-            Container(
-                child: Column(
-              children: [
-                _timeInput(),
-                currentRecipe.preparationTime != null
-                    ? Text(DateFormat("HH:mm:ss")
-                        .format(currentRecipe.preparationTime))
-                    : Text("Seleccione tiempo de preparación"),
-              ],
-            )),
-            Container(
-              padding: EdgeInsets.all(20.0),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'Ingrese una descripcion para su receta',
-                    labelText: "Descripción"),
-                onChanged: (value) => print(value),
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
+            Card(
+              child: Container(
+                child: RecipeIngredients(
+                  listaIngredientes: ["a", "b"],
+                ),
               ),
             ),
             Container(
               child: FlatButton(
                 child: Text("Send"),
-                onPressed: () => {this._recipeService.addRecipe(currentRecipe)},
+                onPressed: () => {
+                  this.currentRecipe.imagesFiles = this.listaImagenes,
+                  this._recipeService.addRecipe(currentRecipe)
+                },
               ),
             )
           ],
@@ -112,9 +139,15 @@ class _AddRecipePage extends State<AddRecipePage> {
               currentTime: DateTime.parse("0000-00-00 00:00:00"),
               locale: LocaleType.es);
         },
-        child: Text(
-          'Tiempo de preparación aproximado',
-          style: TextStyle(color: Colors.blue),
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              color: Colors.amber[700]),
+          child: currentRecipe.preparationTime != null
+              ? Text(
+                  DateFormat("HH:mm:ss").format(currentRecipe.preparationTime))
+              : Icon(Icons.watch_later),
         ));
   }
 }
