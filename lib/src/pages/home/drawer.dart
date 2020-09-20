@@ -2,15 +2,9 @@ import 'package:appetito/src/models/user-appetito.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
-<<<<<<< Updated upstream
 import 'package:provider/provider.dart';
-=======
-<<<<<<< HEAD
 import 'package:appetito/src/pages/home/home.dart';
-=======
 import 'package:provider/provider.dart';
->>>>>>> develop
->>>>>>> Stashed changes
 
 class DrawerPage extends StatelessWidget {
   final AuthService _authService = AuthService();
@@ -21,7 +15,6 @@ class DrawerPage extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-<<<<<<< HEAD
           UserAccountsDrawerHeader(
             accountName: Text('Nombre'),
             accountEmail: Text('email@gmail.com'),
@@ -30,20 +23,6 @@ class DrawerPage extends StatelessWidget {
               child: Text(
                 "N",
                 style: TextStyle(fontSize: 30),
-=======
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue[300],
-              image: DecorationImage(
-                  image: AssetImage('assets/img/drawer_img.jpg'),
-                  fit: BoxFit.cover),
-            ),
-            child: Text(
-              user.nombre,
-              style: TextStyle(
-                fontSize: 28.0,
-                color: Colors.black,
->>>>>>> develop
               ),
             ),
           ),
