@@ -51,6 +51,7 @@ class _AddRecipePage extends State<AddRecipePage> {
                         print('change $date');
                       }, onConfirm: (date) {
                         print('confirm $date');
+                        currentRecipe.preparationTime = date;
                       },
                           currentTime: DateTime.parse("0000-00-00 00:00:00"),
                           locale: LocaleType.es);
