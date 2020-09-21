@@ -10,42 +10,78 @@ class RecipeIngredients extends StatefulWidget {
 }
 
 class _RecipeIngredients extends State<RecipeIngredients> {
+  List<TextEditingController> _inputControllers = [];
   @override
   Widget build(BuildContext context) {
-    return Column(children: showIngredients());
+    return Column(children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text(
+          "Ingredientes",
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+        ),
+      ),
+      ...showIngredients(),
+      FloatingActionButton(
+        splashColor: Colors.amberAccent,
+        onPressed: () {
+          setState(() {
+            widget.listaIngredientes.add("");
+          });
+        },
+        child: Icon(Icons.add),
+      )
+    ]);
   }
 
   List<Widget> showIngredients() {
-    return widget.listaIngredientes
-        .map(
-          (ingrediente) => Builder(
-            builder: (BuildContext context) => Container(
-              child: Row(
-                children: <Widget>[
-                  Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: TextField(
-                        textCapitalization: TextCapitalization.words,
-                        decoration: InputDecoration(
-                          labelText: "Ingrediente",
-                          hintText: "Ej: 3 huevos",
-                          icon: Icon(Icons.list),
+    List<Widget> listaWidgetIngredientes = [];
+    List<TextEditingController> ingredientesControllers = [];
+    widget.listaIngredientes.forEach((ingrediente) => {
+          ingredientesControllers.add(TextEditingController(text: ingrediente))
+        });
+    widget.listaIngredientes
+        .asMap()
+        .forEach((index, ingrediente) => listaWidgetIngredientes.add(
+              Container(
+                padding: EdgeInsets.only(left: 5, right: 8),
+                child: Row(
+                  children: <Widget>[
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: TextField(
+                          controller: ingredientesControllers[index],
+                          textCapitalization: TextCapitalization.words,
+                          decoration: InputDecoration(
+                            labelText: "Ingrediente",
+                            hintText: "Ej: 3 huevos",
+                            icon: Icon(Icons.list),
+                          ),
+                          onChanged: (value) {
+                            widget.listaIngredientes[index] = value;
+                          },
                         ),
-                        onChanged: (value) {
-                          setState(() {
-                            ingrediente = value;
-                          });
-                        },
                       ),
                     ),
-                  ),
-                  Icon(Icons.close)
-                ],
+                    widget.listaIngredientes.length > 1
+                        ? IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              setState(() {
+                                widget.listaIngredientes.removeAt(index);
+                              });
+                            },
+                          )
+                        : Icon(
+                            Icons.delete,
+                            color: Colors.grey[400],
+                          ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        )
-        .toList();
+            ));
+
+    return listaWidgetIngredientes;
   }
 }

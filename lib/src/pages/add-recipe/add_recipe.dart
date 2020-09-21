@@ -15,7 +15,7 @@ class AddRecipePage extends StatefulWidget {
 }
 
 class _AddRecipePage extends State<AddRecipePage> {
-  Recipe currentRecipe = Recipe();
+  Recipe currentRecipe = Recipe(ingredients: [""]);
   Future<PickedFile> file;
   String status = '';
   String base64Image;
@@ -83,9 +83,11 @@ class _AddRecipePage extends State<AddRecipePage> {
               ),
             ),
             Card(
+              margin: EdgeInsets.all(15.0),
+              elevation: 3.0,
               child: Container(
                 child: RecipeIngredients(
-                  listaIngredientes: ["a", "b"],
+                  listaIngredientes: currentRecipe.ingredients,
                 ),
               ),
             ),
@@ -94,7 +96,10 @@ class _AddRecipePage extends State<AddRecipePage> {
                 child: Text("Send"),
                 onPressed: () => {
                   this.currentRecipe.imagesFiles = this.listaImagenes,
-                  this._recipeService.addRecipe(currentRecipe)
+                  //this._recipeService.addRecipe(currentRecipe)
+                  this.currentRecipe.ingredients.forEach((element) {
+                    print(element);
+                  })
                 },
               ),
             )
