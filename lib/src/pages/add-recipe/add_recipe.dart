@@ -1,6 +1,7 @@
 import 'package:appetito/src/models/recipe.dart';
 import 'package:appetito/src/pages/add-recipe/recipe_images.dart';
 import 'package:appetito/src/pages/add-recipe/recipe_ingredients.dart';
+import 'package:appetito/src/pages/add-recipe/recipe_procedures.dart';
 import 'package:appetito/src/services/recipe-service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,7 +16,7 @@ class AddRecipePage extends StatefulWidget {
 }
 
 class _AddRecipePage extends State<AddRecipePage> {
-  Recipe currentRecipe = Recipe(ingredients: [""]);
+  Recipe currentRecipe = Recipe(ingredients: [""], procedures: [""]);
   Future<PickedFile> file;
   String status = '';
   String base64Image;
@@ -88,6 +89,15 @@ class _AddRecipePage extends State<AddRecipePage> {
               child: Container(
                 child: RecipeIngredients(
                   ingredientsList: currentRecipe.ingredients,
+                ),
+              ),
+            ),
+            Card(
+              margin: EdgeInsets.all(15.0),
+              elevation: 3.0,
+              child: Container(
+                child: RecipeProcedures(
+                  proceduresList: currentRecipe.procedures,
                 ),
               ),
             ),

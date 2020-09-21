@@ -23,6 +23,7 @@ class _RecipeProcedures extends State<RecipeProcedures> {
       ),
       ...showProcedures(),
       FloatingActionButton(
+        heroTag: "add-procedure",
         splashColor: Colors.amberAccent,
         onPressed: () {
           setState(() {

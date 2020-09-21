@@ -23,6 +23,7 @@ class _RecipeIngredients extends State<RecipeIngredients> {
       ),
       ...showIngredients(),
       FloatingActionButton(
+        heroTag: "add-ingredients",
         splashColor: Colors.amberAccent,
         onPressed: () {
           setState(() {
