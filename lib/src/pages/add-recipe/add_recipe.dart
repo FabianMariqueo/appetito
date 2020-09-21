@@ -106,10 +106,7 @@ class _AddRecipePage extends State<AddRecipePage> {
                 child: Text("Send"),
                 onPressed: () => {
                   this.currentRecipe.imagesFiles = this.listaImagenes,
-                  //this._recipeService.addRecipe(currentRecipe)
-                  this.currentRecipe.ingredients.forEach((element) {
-                    print(element);
-                  })
+                  this._recipeService.addRecipe(currentRecipe)
                 },
               ),
             )

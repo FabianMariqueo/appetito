@@ -55,7 +55,23 @@ class _RecipeProcedures extends State<RecipeProcedures> {
                           decoration: InputDecoration(
                             labelText: "Instrucciones del paso",
                             hintText: "Ej: Hervir la cuchara",
-                            icon: Icon(Icons.list),
+                            icon: InkWell(
+                              child: Container(
+                                width: 40.0,
+                                height: 40.0,
+                                padding: EdgeInsets.symmetric(vertical: 13),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20)),
+                                    color: Colors.grey[600]),
+                                child: Text(
+                                  "${index + 1}",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.white),
+                                ),
+                              ),
+                            ),
                           ),
                           onChanged: (value) {
                             widget.proceduresList[index] = value;
