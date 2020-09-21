@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class RecipeIngredients extends StatefulWidget {
-  List<String> listaIngredientes;
+  List<String> ingredientsList;
 
-  RecipeIngredients({this.listaIngredientes});
+  RecipeIngredients({this.ingredientsList});
 
   @override
   _RecipeIngredients createState() => _RecipeIngredients();
@@ -26,7 +26,7 @@ class _RecipeIngredients extends State<RecipeIngredients> {
         splashColor: Colors.amberAccent,
         onPressed: () {
           setState(() {
-            widget.listaIngredientes.add("");
+            widget.ingredientsList.add("");
           });
         },
         child: Icon(Icons.add),
@@ -37,10 +37,10 @@ class _RecipeIngredients extends State<RecipeIngredients> {
   List<Widget> showIngredients() {
     List<Widget> listaWidgetIngredientes = [];
     List<TextEditingController> ingredientesControllers = [];
-    widget.listaIngredientes.forEach((ingrediente) => {
+    widget.ingredientsList.forEach((ingrediente) => {
           ingredientesControllers.add(TextEditingController(text: ingrediente))
         });
-    widget.listaIngredientes
+    widget.ingredientsList
         .asMap()
         .forEach((index, ingrediente) => listaWidgetIngredientes.add(
               Container(
@@ -59,17 +59,17 @@ class _RecipeIngredients extends State<RecipeIngredients> {
                             icon: Icon(Icons.list),
                           ),
                           onChanged: (value) {
-                            widget.listaIngredientes[index] = value;
+                            widget.ingredientsList[index] = value;
                           },
                         ),
                       ),
                     ),
-                    widget.listaIngredientes.length > 1
+                    widget.ingredientsList.length > 1
                         ? IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
                               setState(() {
-                                widget.listaIngredientes.removeAt(index);
+                                widget.ingredientsList.removeAt(index);
                               });
                             },
                           )

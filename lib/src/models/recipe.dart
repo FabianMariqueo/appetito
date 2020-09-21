@@ -1,4 +1,3 @@
-import 'package:appetito/src/models/procedure.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'recipe.g.dart';
@@ -9,10 +8,10 @@ class Recipe {
   String description;
   int portions;
   DateTime preparationTime;
-  List<Future<dynamic>> imagesFiles = [];
+  List<dynamic> imagesFiles = [];
   List<String> imagesURL = [];
   List<String> ingredients = [];
-  List<Procedure> procedures = [];
+  List<String> procedures = [];
 
   Recipe(
       {this.name,

@@ -11,10 +11,7 @@ Recipe _$RecipeFromJson(Map<String, dynamic> json) {
     name: json['name'] as String,
     description: json['description'] as String,
     portions: json['portions'] as int,
-    procedures: (json['procedures'] as List)
-        ?.map((e) =>
-            e == null ? null : Procedure.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    procedures: (json['procedures'] as List)?.map((e) => e as String)?.toList(),
     imagesFiles: json['imagesFiles'] as List,
     imagesURL: (json['imagesURL'] as List)?.map((e) => e as String)?.toList(),
     ingredients:

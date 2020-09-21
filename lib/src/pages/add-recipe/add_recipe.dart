@@ -87,7 +87,7 @@ class _AddRecipePage extends State<AddRecipePage> {
               elevation: 3.0,
               child: Container(
                 child: RecipeIngredients(
-                  listaIngredientes: currentRecipe.ingredients,
+                  ingredientsList: currentRecipe.ingredients,
                 ),
               ),
             ),
