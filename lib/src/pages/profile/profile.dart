@@ -138,7 +138,7 @@ class ProfilePage extends StatelessWidget {
             radius: 40,
             backgroundColor: Colors.blue,
             child: Text(
-              "${user.email.substring(0, 1)}".toUpperCase(),
+              user != null ? "${user.email.substring(0, 1)}".toUpperCase() : "",
               style: TextStyle(
                 fontSize: 30,
               ),
@@ -147,7 +147,10 @@ class ProfilePage extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              _estilonombre(user.email.substring(0, user.email.indexOf('@'))),
+              user != null
+                  ? _estilonombre(
+                      user.email.substring(0, user.email.indexOf('@')))
+                  : Text(""),
               _estilodescripcion("usuario de appetito"),
               _editarPerfil(context),
             ],
