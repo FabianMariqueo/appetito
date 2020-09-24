@@ -48,12 +48,15 @@ class HomePage extends StatelessWidget {
 
   Widget _titulohome() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Image.asset(
-          'assets/img/logo titulo.png',
-          height: 120,
-          width: 120,
+        Expanded(
+          child: Center(
+            child: Image.asset(
+              'assets/img/logo titulo.png',
+              height: 120,
+              width: 120,
+            ),
+          ),
         ),
         Icon(Icons.search),
       ],
@@ -69,6 +72,7 @@ class HomePage extends StatelessWidget {
           print('nombre ultima receta');
         },
         child: Card(
+          clipBehavior: Clip.antiAlias,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
@@ -82,8 +86,24 @@ class HomePage extends StatelessWidget {
                 height: 100,
               ),
               ListTile(
-                title: Text('Nombre receta 1'),
-                subtitle: Text('Tiempo | Porciones'),
+                title: _tituloreceta("Titulo de receta"),
+                subtitle: Row(
+                  children: <Widget>[
+                    Icon(Icons.timer),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    _descripcion("Minutos"),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.local_dining),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    _descripcion("Porciones")
+                  ],
+                ),
               ),
             ],
           ),
@@ -126,6 +146,7 @@ class HomePage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Card(
+          clipBehavior: Clip.antiAlias,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           child: Image(
@@ -154,6 +175,23 @@ class HomePage extends StatelessWidget {
               )),
         ),
       ],
+    );
+  }
+
+  Widget _descripcion(String descripcion) {
+    return Text(
+      descripcion,
+      style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal),
+    );
+  }
+
+  Widget _tituloreceta(String titulo) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: Text(
+        titulo,
+        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

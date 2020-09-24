@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
 import 'package:appetito/src/pages/home/home.dart';
+import 'package:appetito/src/pages/recipes/my_recipes.dart';
+import 'package:appetito/src/pages/recipes/saved_recipes.dart';
 import 'package:provider/provider.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -14,19 +16,22 @@ class DrawerPage extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(user.email.substring(0, user.email.indexOf('@'))),
-            accountEmail: Text(user.email),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.blue,
-              child: Text(
-                "${user.email.substring(0, 1)}".toUpperCase(),
-                style: TextStyle(
-                  fontSize: 30,
+          user == null
+              ? Text('usuario nulo')
+              : UserAccountsDrawerHeader(
+                  accountName:
+                      Text(user.email.substring(0, user.email.indexOf('@'))),
+                  accountEmail: Text(user.email),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      "${user.email.substring(0, 1)}".toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           ListTile(
             title: Text('Inicio'),
             leading: Icon(Icons.person),
@@ -40,17 +45,12 @@ class DrawerPage extends StatelessWidget {
           ListTile(
             title: Text('Mis Recetas'),
             leading: Icon(Icons.content_paste),
-            onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
+            onTap: () => Navigator.pushNamed(context, MyRecipesPage.tag),
           ),
           ListTile(
             title: Text('Recetas Guardadas'),
             leading: Icon(Icons.save),
-            onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
-          ),
-          ListTile(
-            title: Text('Lista Compra'),
-            leading: Icon(Icons.list),
-            onTap: () => Navigator.pushNamed(context, ProfilePage.tag),
+            onTap: () => Navigator.pushNamed(context, SavedRecipesPage.tag),
           ),
           Divider(
             thickness: 5.0,
