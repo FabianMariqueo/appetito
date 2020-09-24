@@ -134,11 +134,14 @@ class _SignInPageState extends State<SignInPage> {
                             setState(() {
                               this._loading = true;
                             });
-                            dynamic result =
-                                _authService.signInWithEmailAndPassword(_user);
+                            print(_user);
+                            dynamic result = await _authService
+                                .signInWithEmailAndPassword(_user);
                             if (result == null) {
                               print("Error");
-                              this._loading = false;
+                              setState(() {
+                                this._loading = false;
+                              });
                             }
                           }
                         },

@@ -127,11 +127,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             this._loading = true;
-                            dynamic result = _authService
+                            dynamic result = await _authService
                                 .registerWithEmailAndPassword(_user);
                             if (result == null) {
                               print("Error");
-                              this._loading = false;
+                              setState(() {
+                                this._loading = false;
+                              });
                             }
                           }
                         },
