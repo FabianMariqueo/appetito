@@ -1,6 +1,7 @@
 import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
 import 'package:appetito/src/pages/home/drawer.dart';
+import 'package:appetito/src/pages/recipes/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -69,7 +70,7 @@ class HomePage extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 20),
       child: InkWell(
         onTap: () {
-          print('nombre ultima receta');
+          Navigator.pushNamed(context, RecipePage.tag);
         },
         child: Card(
           clipBehavior: Clip.antiAlias,

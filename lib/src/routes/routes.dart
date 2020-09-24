@@ -8,6 +8,8 @@ import 'package:appetito/src/pages/authentication/sign_in.dart';
 import 'package:appetito/src/pages/authentication/sign_up.dart';
 import 'package:appetito/src/pages/recipes/my_recipes.dart';
 import 'package:appetito/src/pages/recipes/saved_recipes.dart';
+import 'package:appetito/src/pages/recipes/recipe.dart';
+import 'package:appetito/src/pages/profile/edit_profile.dart';
 
 Map<String, WidgetBuilder> getRoutes() {
   return <String, WidgetBuilder>{
@@ -19,5 +21,7 @@ Map<String, WidgetBuilder> getRoutes() {
     HomePage.tag: (context) => HomePage(),
     MyRecipesPage.tag: (context) => MyRecipesPage(),
     SavedRecipesPage.tag: (context) => SavedRecipesPage(),
+    RecipePage.tag: (context) => RecipePage(),
+    EditProfilePage.tag: (context) => EditProfilePage(),
   };
 }
