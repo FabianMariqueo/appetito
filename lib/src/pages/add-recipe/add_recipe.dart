@@ -90,13 +90,13 @@ class _AddRecipePage extends State<AddRecipePage> {
               ),
             ),
             Container(
-                child: Row(
-                color: Colors.amber[600],
               padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
               child: RaisedButton(
+                color: Colors.amber[600],
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                ),
                   children: [Text("Enviar"), Icon(Icons.send)],
+                ),
                 onPressed: () => {
                   this.currentRecipe.imagesFiles = this.listaImagenes,
                   this._recipeService.addRecipe(currentRecipe)
