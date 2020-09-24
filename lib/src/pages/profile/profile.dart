@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetito/src/models/user-appetito.dart';
+import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
 
 class ProfilePage extends StatelessWidget {
   static String tag = '/profile';
@@ -21,17 +22,27 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(30.0),
+        padding: EdgeInsets.all(20.0),
         child: ListView(
           children: <Widget>[
             _infoUsuario(context),
-            Divider(),
             _listaRecetas(context),
             _listaRecetas(context),
             _listaRecetas(context),
           ],
         ),
       ),
+      floatingActionButton: _addButton(context),
+    );
+  }
+
+  Widget _addButton(BuildContext context) {
+    return FloatingActionButton(
+      splashColor: Colors.amberAccent,
+      onPressed: () {
+        Navigator.pushNamed(context, AddRecipePage.tag);
+      },
+      child: Icon(Icons.add),
     );
   }
 
@@ -40,6 +51,7 @@ class ProfilePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Card(
+        clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
@@ -53,8 +65,25 @@ class ProfilePage extends StatelessWidget {
               height: 100,
             ),
             ListTile(
-              title: Text('Nombre receta 1'),
-              subtitle: Text('Tiempo | Porciones'),
+              //leading: Icon(Icons.edit),
+              title: _titulo("Nombre de la receta"),
+              subtitle: Row(
+                children: <Widget>[
+                  Icon(Icons.timer),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  _descripcion("Minutos"),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Icon(Icons.local_dining),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  _descripcion("Porciones")
+                ],
+              ),
             ),
           ],
         ),
@@ -73,45 +102,85 @@ class ProfilePage extends StatelessWidget {
       padding: const EdgeInsets.all(0.0),
       child: Container(
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 40.0),
-        child: const Text('Editar perfil', style: TextStyle(fontSize: 15)),
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.edit),
+            SizedBox(width: 5),
+            const Text('Editar perfil', style: TextStyle(fontSize: 15)),
+          ],
+        ),
       ),
     );
   }
 
   Widget _infoUsuario(BuildContext context) {
     final user = Provider.of<UserAppetito>(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        CircleAvatar(
-          radius: 50,
-          backgroundColor: Colors.blue,
-          child: Text(
-            "${user.email.substring(0, 1)}".toUpperCase(),
-            style: TextStyle(
-              fontSize: 30,
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          CircleAvatar(
+            radius: 40,
+            backgroundColor: Colors.blue,
+            child: Text(
+              "${user.email.substring(0, 1)}".toUpperCase(),
+              style: TextStyle(
+                fontSize: 30,
+              ),
             ),
           ),
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              user.email.substring(0, user.email.indexOf('@')),
-              style: TextStyle(fontSize: 20.0),
-            ),
-            Text(
-              'Usuario de appetito',
-              style: TextStyle(fontSize: 15.0),
-            ),
-            _editarPerfil(),
-          ],
-        ),
-      ],
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _estilonombre(user.email.substring(0, user.email.indexOf('@'))),
+              _estilodescripcion("usuario de appetito usuario de appetito"),
+              _editarPerfil(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _estilonombre(String titulo) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: Text(
+        titulo,
+        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _estilodescripcion(String titulo) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: Text(
+        titulo,
+        style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal),
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  Widget _titulo(String titulo) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 5.0),
+      child: Text(
+        titulo,
+        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  Widget _descripcion(String descripcion) {
+    return Text(
+      descripcion,
+      style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal),
     );
   }
 }
