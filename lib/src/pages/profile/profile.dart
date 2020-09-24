@@ -7,6 +7,7 @@ import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
 import 'package:appetito/src/pages/recipes/recipe.dart';
 import 'package:appetito/src/pages/profile/edit_profile.dart';
+import 'package:appetito/src/pages/home/drawer.dart';
 
 class ProfilePage extends StatelessWidget {
   static String tag = '/profile';
@@ -23,6 +24,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
+      drawer: DrawerPage(),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: ListView(

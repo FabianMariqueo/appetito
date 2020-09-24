@@ -73,6 +73,7 @@ flutter:
     - assets/img/carnes.jpg
     - assets/img/reposteria.jpg
     - assets/img/pan.jpg
+    - assets/img/image_default.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

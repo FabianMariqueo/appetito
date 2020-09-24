@@ -15,7 +15,7 @@ class _RecipeProcedures extends State<RecipeProcedures> {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(20.0),
         child: Text(
           "Procedimientos",
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -43,12 +43,12 @@ class _RecipeProcedures extends State<RecipeProcedures> {
         .asMap()
         .forEach((index, procedure) => procedureWidgetList.add(
               Container(
-                padding: EdgeInsets.only(left: 5, right: 8),
+                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Row(
                   children: <Widget>[
                     Flexible(
                       child: Padding(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(5.0),
                         child: TextField(
                           controller: _inputControllers[index],
                           textCapitalization: TextCapitalization.sentences,
@@ -59,7 +59,7 @@ class _RecipeProcedures extends State<RecipeProcedures> {
                               child: Container(
                                 width: 40.0,
                                 height: 40.0,
-                                padding: EdgeInsets.symmetric(vertical: 13),
+                                padding: EdgeInsets.symmetric(vertical: 10),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     borderRadius:

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/recipes/recipe.dart';
+import 'package:appetito/src/pages/home/drawer.dart';
 
 class SavedRecipesPage extends StatelessWidget {
   static String tag = '/savedrecipes';
@@ -19,6 +20,7 @@ class SavedRecipesPage extends StatelessWidget {
           ),
         ),
       ),
+      drawer: DrawerPage(),
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: ListView(
@@ -57,7 +59,11 @@ class SavedRecipesPage extends StatelessWidget {
                     ),
                     _descripcion("30 Min."),
                     SizedBox(
-                      width: 10,
+                      width: 5,
+                    ),
+                    Text('|'),
+                    SizedBox(
+                      width: 5,
                     ),
                     Icon(Icons.local_dining),
                     SizedBox(

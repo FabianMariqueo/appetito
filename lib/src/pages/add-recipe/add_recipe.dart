@@ -31,12 +31,16 @@ class _AddRecipePage extends State<AddRecipePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Agregar Receta'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Card(
-              margin: EdgeInsets.all(15.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: EdgeInsets.all(20.0),
               elevation: 3.0,
               child: Column(
                 children: <Widget>[
@@ -44,17 +48,8 @@ class _AddRecipePage extends State<AddRecipePage> {
                       padding: EdgeInsets.all(8.0),
                       child: RecipeImages(listaImagenes: listaImagenes)),
                   Container(child: this._recipeTitleInput()),
-                  Container(
-                    padding: EdgeInsets.all(20.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: 'Ingrese una descripcion para su receta',
-                          labelText: "Descripción"),
-                      onChanged: (value) => {currentRecipe.description = value},
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                    ),
-                  ),
+                  Container(child: this._recipeDescription()),
+                  //_recipeDetails(),
                   Container(child: this._recipePortionsInput()),
                   Container(
                       padding: EdgeInsets.all(10.0),
@@ -72,7 +67,10 @@ class _AddRecipePage extends State<AddRecipePage> {
               ),
             ),
             Card(
-              margin: EdgeInsets.all(15.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: EdgeInsets.all(20.0),
               elevation: 3.0,
               child: Container(
                 child: RecipeIngredients(
@@ -81,7 +79,10 @@ class _AddRecipePage extends State<AddRecipePage> {
               ),
             ),
             Card(
-              margin: EdgeInsets.all(15.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              margin: EdgeInsets.all(20.0),
               elevation: 3.0,
               child: Container(
                 child: RecipeProcedures(
@@ -89,20 +90,39 @@ class _AddRecipePage extends State<AddRecipePage> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
+            Padding(
+              padding:
+                  const EdgeInsets.only(bottom: 20.0, left: 20.0, right: 20.0),
               child: RaisedButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
                 color: Colors.amber[600],
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Text("Enviar"), Icon(Icons.send)],
+                textColor: Colors.white,
+                padding: const EdgeInsets.all(0.0),
+                child: Container(
+                  width: 250,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.send),
+                      SizedBox(width: 5),
+                      const Text('Guardar Receta',
+                          style: TextStyle(fontSize: 15)),
+                    ],
+                  ),
                 ),
                 onPressed: () => {
                   this.currentRecipe.imagesFiles = this.listaImagenes,
                   this._recipeService.addRecipe(currentRecipe)
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -112,19 +132,25 @@ class _AddRecipePage extends State<AddRecipePage> {
   Widget _recipeTitleInput() {
     return Padding(
       padding: EdgeInsets.all(10.0),
-      child: TextField(
-        textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Titulo",
-          hintText: "Nombre de la receta",
-          icon: Icon(Icons.local_dining),
+      child: Container(
+        padding: EdgeInsets.only(right: 20, left: 20),
+        child: TextFormField(
+          textCapitalization: TextCapitalization.sentences,
+          autofocus: false,
+          style: TextStyle(fontSize: 15.0, color: Colors.grey),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+            labelText: "Nombre de la receta",
+            //hintText: "Nombre de la receta",
+            icon: Icon(Icons.local_dining),
+            isDense: true,
+          ),
+          onChanged: (value) {
+            setState(() {
+              currentRecipe.name = value;
+            });
+          },
         ),
-        onChanged: (value) {
-          setState(() {
-            currentRecipe.name = value;
-          });
-        },
       ),
     );
   }
@@ -132,19 +158,48 @@ class _AddRecipePage extends State<AddRecipePage> {
   Widget _recipePortionsInput() {
     return Padding(
       padding: EdgeInsets.all(10.0),
-      child: TextField(
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Porciones",
-          hintText: "Cantidad de raciones",
-          icon: Icon(Icons.person_add),
+      child: Container(
+        padding: EdgeInsets.only(right: 20, left: 20),
+        child: TextFormField(
+          keyboardType: TextInputType.number,
+          autofocus: false,
+          style: TextStyle(fontSize: 15.0, color: Colors.grey),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+            labelText: "Porciones",
+            //hintText: "Cantidad de raciones",
+            icon: Icon(Icons.person_add),
+            isDense: true,
+          ),
+          onChanged: (value) {
+            setState(() {
+              currentRecipe.portions = int.parse(value);
+            });
+          },
         ),
-        onChanged: (value) {
-          setState(() {
-            currentRecipe.portions = int.parse(value);
-          });
-        },
+      ),
+    );
+  }
+
+  Widget _recipeDescription() {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: Container(
+        padding: EdgeInsets.only(right: 20, left: 20),
+        child: TextFormField(
+          autofocus: false,
+          style: TextStyle(fontSize: 15.0, color: Colors.grey),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+            hintText: 'Ingrese una descripcion para su receta',
+            labelText: "Descripción de la receta",
+            icon: Icon(Icons.chat),
+            isDense: true,
+          ),
+          onChanged: (value) => {currentRecipe.description = value},
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+        ),
       ),
     );
   }
@@ -174,5 +229,21 @@ class _AddRecipePage extends State<AddRecipePage> {
                   DateFormat("HH:mm:ss").format(currentRecipe.preparationTime))
               : Icon(Icons.watch_later),
         ));
+  }
+
+  Widget _recipeDetails() {
+    return Row(
+      children: <Widget>[
+        _timeInput(),
+        SizedBox(
+          width: 5,
+        ),
+        Text('|'),
+        SizedBox(
+          width: 5,
+        ),
+        _recipePortionsInput(),
+      ],
+    );
   }
 }

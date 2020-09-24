@@ -15,7 +15,7 @@ class _RecipeIngredients extends State<RecipeIngredients> {
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
       Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(20.0),
         child: Text(
           "Ingredientes",
           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -45,19 +45,19 @@ class _RecipeIngredients extends State<RecipeIngredients> {
         .asMap()
         .forEach((index, ingrediente) => listaWidgetIngredientes.add(
               Container(
-                padding: EdgeInsets.only(left: 5, right: 8),
+                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Row(
                   children: <Widget>[
                     Flexible(
                       child: Padding(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(5.0),
                         child: TextField(
                           controller: ingredientesControllers[index],
                           textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                             labelText: "Ingrediente",
                             hintText: "Ej: 3 huevos",
-                            icon: Icon(Icons.list),
+                            icon: Icon(Icons.assignment),
                           ),
                           onChanged: (value) {
                             widget.ingredientsList[index] = value;

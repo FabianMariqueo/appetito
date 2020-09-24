@@ -96,7 +96,11 @@ class HomePage extends StatelessWidget {
                     ),
                     _descripcion("Minutos"),
                     SizedBox(
-                      width: 10,
+                      width: 5,
+                    ),
+                    Text('|'),
+                    SizedBox(
+                      width: 5,
                     ),
                     Icon(Icons.local_dining),
                     SizedBox(
@@ -155,7 +159,7 @@ class HomePage extends StatelessWidget {
             fit: BoxFit.cover,
             width: Width / 2,
             height: Width / 2,
-            color: Colors.black54,
+            color: Colors.black38,
             colorBlendMode: BlendMode.multiply,
             //Text(nombrecategoria),
           ),

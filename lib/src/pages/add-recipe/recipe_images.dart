@@ -22,28 +22,34 @@ class _RecipeImages extends State<RecipeImages> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        InkWell(
-          onTap: () {
-            chooseImage();
-          },
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.symmetric(vertical: 13),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: Colors.amber[700]),
-            child: Text(
-              'Seleccionar Imagen',
-              style: TextStyle(fontSize: 15, color: Colors.white),
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          widget.listaImagenes.length > 0 ? showImages() : showDefault(),
+          InkWell(
+            onTap: () {
+              chooseImage();
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.symmetric(vertical: 13),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Colors.amber[700]),
+              child: Text(
+                'Seleccionar Imagen',
+                style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
-        ),
-        widget.listaImagenes.length > 0 ? showImages() : showDefault(),
-      ],
+        ],
+      ),
     );
   }
 
@@ -95,7 +101,7 @@ class _RecipeImages extends State<RecipeImages> {
 
   Widget showDefault() {
     return Image.asset(
-      'assets/img/logo.png',
+      'assets/img/image_default.png',
       height: 100,
       width: 100,
     );

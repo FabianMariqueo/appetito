@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetito/src/models/user-appetito.dart';
+import 'package:appetito/src/pages/home/drawer.dart';
 
 class MyRecipesPage extends StatelessWidget {
   static String tag = '/myrecipes';
@@ -18,6 +19,7 @@ class MyRecipesPage extends StatelessWidget {
           ),
         ),
       ),
+      drawer: DrawerPage(),
       body: Padding(
         padding: EdgeInsets.all(10.0),
         child: ListView(
