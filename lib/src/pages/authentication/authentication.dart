@@ -1,5 +1,6 @@
 import 'package:appetito/src/pages/authentication/sign_in.dart';
 import 'package:appetito/src/pages/authentication/sign_up.dart';
+import 'package:appetito/src/pages/authentication/welcome.dart';
 import 'package:flutter/cupertino.dart';
 
 class Authentication extends StatefulWidget {
@@ -9,20 +10,38 @@ class Authentication extends StatefulWidget {
 
 class _AuthenticationState extends State<Authentication> {
   bool showSingnIn = true;
+  bool showWelcome = true;
 
   // Intercambiar entre Login y registro
-  void toogleView() {
+  void showSignInPage(bool show) {
     setState(() {
-      showSingnIn = !showSingnIn;
+      showSingnIn = show;
+    });
+  }
+
+  void showWelcomePage(bool show) {
+    setState(() {
+      showWelcome = show;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (showSingnIn) {
-      return SignInPage(toogleView: toogleView);
+    if (showWelcome) {
+      return WelcomePage(
+          showSignIn: showSignInPage, showWelcome: showWelcomePage);
     } else {
-      return SignUpPage(toogleView: toogleView);
+      if (showSingnIn) {
+        return SignInPage(
+          showSignIn: showSignInPage,
+          showWelcome: showWelcomePage,
+        );
+      } else {
+        return SignUpPage(
+          showSignIn: showSignInPage,
+          showWelcome: showWelcomePage,
+        );
+      }
     }
   }
 }
