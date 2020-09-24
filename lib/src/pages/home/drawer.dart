@@ -1,4 +1,6 @@
 import 'package:appetito/src/models/user-appetito.dart';
+import 'package:appetito/src/pages/app.dart';
+import 'package:appetito/src/pages/authentication/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
@@ -58,7 +60,11 @@ class DrawerPage extends StatelessWidget {
           ListTile(
             title: Text('Cerrar Sesión'),
             leading: Icon(Icons.power_settings_new),
-            onTap: () => this._authService.signOut(),
+            onTap: () => {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, AppPage.tag, (route) => false),
+              this._authService.signOut()
+            },
           ),
         ],
       ),
