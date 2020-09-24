@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
+import 'package:appetito/src/pages/recipes/recipe.dart';
+import 'package:appetito/src/pages/profile/edit_profile.dart';
 
 class ProfilePage extends StatelessWidget {
   static String tag = '/profile';
@@ -50,50 +52,57 @@ class ProfilePage extends StatelessWidget {
     double Width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.all(5.0),
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Image(
-              image: AssetImage("assets/img/drawer_img.jpg"),
-              fit: BoxFit.cover,
-              width: Width,
-              height: 100,
-            ),
-            ListTile(
-              //leading: Icon(Icons.edit),
-              title: _titulo("Nombre de la receta"),
-              subtitle: Row(
-                children: <Widget>[
-                  Icon(Icons.timer),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  _descripcion("Minutos"),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Icon(Icons.local_dining),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  _descripcion("Porciones")
-                ],
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, RecipePage.tag);
+        },
+        child: Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Image(
+                image: AssetImage("assets/img/drawer_img.jpg"),
+                fit: BoxFit.cover,
+                width: Width,
+                height: 100,
               ),
-            ),
-          ],
+              ListTile(
+                //leading: Icon(Icons.edit),
+                title: _titulo("Nombre de la receta"),
+                subtitle: Row(
+                  children: <Widget>[
+                    Icon(Icons.timer),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    _descripcion("Minutos"),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(Icons.local_dining),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    _descripcion("Porciones")
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _editarPerfil() {
+  Widget _editarPerfil(BuildContext context) {
     return RaisedButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, EditProfilePage.tag);
+      },
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
@@ -137,8 +146,8 @@ class ProfilePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _estilonombre(user.email.substring(0, user.email.indexOf('@'))),
-              _estilodescripcion("usuario de appetito usuario de appetito"),
-              _editarPerfil(),
+              _estilodescripcion("usuario de appetito"),
+              _editarPerfil(context),
             ],
           ),
         ],
