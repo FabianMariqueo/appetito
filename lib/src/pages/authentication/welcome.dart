@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:appetito/src/pages/authentication/sign_in.dart';
-import 'package:appetito/src/pages/authentication/sign_up.dart';
-
 class WelcomePage extends StatefulWidget {
-  WelcomePage({Key key, this.title}) : super(key: key);
+  final Function showSignIn;
+  final Function showWelcome;
+
+  WelcomePage({Key key, this.title, this.showSignIn, this.showWelcome})
+      : super(key: key);
 
   final String title;
 
@@ -16,8 +17,10 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _submitButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignInPage()));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => SignInPage()));
+        widget.showSignIn(true);
+        widget.showWelcome(false);
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
@@ -37,8 +40,10 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget _signUpButton() {
     return InkWell(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPage()));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => SignUpPage()));
+        widget.showSignIn(false);
+        widget.showWelcome(false);
       },
       child: Container(
         width: MediaQuery.of(context).size.width,

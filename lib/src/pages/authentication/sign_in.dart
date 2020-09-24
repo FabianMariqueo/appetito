@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 class SignInPage extends StatefulWidget {
   static String tag = '/signin';
 
-  final Function toogleView;
+  final Function showSignIn;
+  final Function showWelcome;
 
-  SignInPage({this.toogleView});
+  SignInPage({this.showSignIn, this.showWelcome});
 
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> {
-
   // Servicio de Authentication
   final AuthService _authService = AuthService();
 
@@ -36,26 +36,31 @@ class _SignInPageState extends State<SignInPage> {
         ? Loading()
         : Scaffold(
             body: Center(
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _backButton(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/img/logo.png',
-                        height: 100,
-                        width: 100,
-                      ),
-                      Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                  FlatButton(
+                    onPressed: () {
+                      widget.showWelcome(true);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/img/logo.png',
+                          height: 100,
+                          width: 100,
                         ),
-                      ),
-                    ],
+                        Text(
+                          "Login",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   _loginInput(),
                   //const SizedBox(height: 5.0),
@@ -65,7 +70,7 @@ class _SignInPageState extends State<SignInPage> {
                       Text("¿No tienes una cuenta?"),
                       FlatButton(
                         onPressed: () {
-                          widget.toogleView();
+                          widget.showSignIn(false);
                         },
                         child: Text(
                           "Registrate",
@@ -77,7 +82,7 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
             ),
-          );
+          ));
   }
 
   Widget _loginInput() {
@@ -129,11 +134,14 @@ class _SignInPageState extends State<SignInPage> {
                             setState(() {
                               this._loading = true;
                             });
-                            dynamic result =
-                                _authService.signInWithEmailAndPassword(_user);
+                            print(_user);
+                            dynamic result = await _authService
+                                .signInWithEmailAndPassword(_user);
                             if (result == null) {
                               print("Error");
-                              this._loading = false;
+                              setState(() {
+                                this._loading = false;
+                              });
                             }
                           }
                         },

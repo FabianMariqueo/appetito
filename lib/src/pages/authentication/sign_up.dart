@@ -7,9 +7,10 @@ import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
   static String tag = '/signup';
-  final Function toogleView;
+  final Function showSignIn;
+  final Function showWelcome;
 
-  SignUpPage({this.toogleView});
+  SignUpPage({this.showSignIn, this.showWelcome});
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -33,26 +34,29 @@ class _SignUpPageState extends State<SignUpPage> {
         ? Loading()
         : Scaffold(
             body: Center(
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _backButton(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/img/logo.png',
-                        height: 100,
-                        width: 100,
-                      ),
-                      Text(
-                        "Registro",
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
+                  FlatButton(
+                    onPressed: () => widget.showWelcome(true),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/img/logo.png',
+                          height: 100,
+                          width: 100,
                         ),
-                      ),
-                    ],
+                        Text(
+                          "Registro",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   _registerInput(),
                   //const SizedBox(height: 10.0),
@@ -62,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       Text("¿Ya tienes una cuenta?"),
                       FlatButton(
                         onPressed: () {
-                          widget.toogleView();
+                          widget.showSignIn(true);
                         },
                         child: Text(
                           "Ingresar",
@@ -73,7 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ],
               ),
             ),
-          );
+          ));
   }
 
   Widget _registerInput() {
@@ -123,11 +127,13 @@ class _SignUpPageState extends State<SignUpPage> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             this._loading = true;
-                            dynamic result = _authService
+                            dynamic result = await _authService
                                 .registerWithEmailAndPassword(_user);
                             if (result == null) {
                               print("Error");
-                              this._loading = false;
+                              setState(() {
+                                this._loading = false;
+                              });
                             }
                           }
                         },

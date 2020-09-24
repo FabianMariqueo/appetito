@@ -51,7 +51,7 @@ class _RecipeProcedures extends State<RecipeProcedures> {
                         padding: EdgeInsets.all(10.0),
                         child: TextField(
                           controller: _inputControllers[index],
-                          textCapitalization: TextCapitalization.words,
+                          textCapitalization: TextCapitalization.sentences,
                           decoration: InputDecoration(
                             labelText: "Instrucciones del paso",
                             hintText: "Ej: Hervir la cuchara",

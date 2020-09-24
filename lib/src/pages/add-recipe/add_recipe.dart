@@ -43,31 +43,19 @@ class _AddRecipePage extends State<AddRecipePage> {
                   Container(
                       padding: EdgeInsets.all(8.0),
                       child: RecipeImages(listaImagenes: listaImagenes)),
-                  Container(
-                    child: this._createInput(
-                        "Titulo",
-                        "Ingrese titulo de la receta",
-                        currentRecipe.name,
-                        Icons.local_dining),
-                  ),
+                  Container(child: this._recipeTitleInput()),
                   Container(
                     padding: EdgeInsets.all(20.0),
                     child: TextField(
                       decoration: InputDecoration(
                           hintText: 'Ingrese una descripcion para su receta',
                           labelText: "Descripción"),
-                      onChanged: (value) => print(value),
+                      onChanged: (value) => {currentRecipe.description = value},
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
                     ),
                   ),
-                  Container(
-                    child: this._createInput(
-                        "Porciones",
-                        "Cantidad de porciones",
-                        currentRecipe.portions,
-                        Icons.person_add),
-                  ),
+                  Container(child: this._recipePortionsInput()),
                   Container(
                       padding: EdgeInsets.all(10.0),
                       child: Row(
@@ -102,8 +90,13 @@ class _AddRecipePage extends State<AddRecipePage> {
               ),
             ),
             Container(
-              child: FlatButton(
-                child: Text("Send"),
+              padding: EdgeInsets.only(left: 15, right: 15, bottom: 10),
+              child: RaisedButton(
+                color: Colors.amber[600],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text("Enviar"), Icon(Icons.send)],
+                ),
                 onPressed: () => {
                   this.currentRecipe.imagesFiles = this.listaImagenes,
                   this._recipeService.addRecipe(currentRecipe)
@@ -116,20 +109,40 @@ class _AddRecipePage extends State<AddRecipePage> {
     );
   }
 
-  Widget _createInput(String title, String hintText, bindData, icon) {
+  Widget _recipeTitleInput() {
     return Padding(
       padding: EdgeInsets.all(10.0),
       child: TextField(
-        textCapitalization: TextCapitalization.words,
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: title,
-          hintText: hintText,
-          icon: Icon(icon),
+          labelText: "Titulo",
+          hintText: "Nombre de la receta",
+          icon: Icon(Icons.local_dining),
         ),
         onChanged: (value) {
           setState(() {
-            bindData = value;
+            currentRecipe.name = value;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _recipePortionsInput() {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: TextField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: "Porciones",
+          hintText: "Cantidad de raciones",
+          icon: Icon(Icons.person_add),
+        ),
+        onChanged: (value) {
+          setState(() {
+            currentRecipe.portions = int.parse(value);
           });
         },
       ),
