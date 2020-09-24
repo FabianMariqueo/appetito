@@ -21,7 +21,7 @@ class MyRecipesPage extends StatelessWidget {
       ),
       drawer: DrawerPage(),
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(20.0),
         child: ListView(
           children: <Widget>[
             _miReceta(context),
@@ -40,71 +40,97 @@ class MyRecipesPage extends StatelessWidget {
   }
 
   Widget _miReceta(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding:
-                  const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 20.0),
-              child: Row(
-                children: <Widget>[
-                  InkWell(
-                    onTap: () {
-                      print('ver receta');
-                    },
-                    child: ClipOval(
-                      child: Material(
-                        color: Colors.green, // button color
-                        child: InkWell(
-                          splashColor: Colors.amber, // inkwell color
-                          child: SizedBox(
-                              width: 35, height: 35, child: Icon(Icons.edit)),
-                          onTap: () {},
-                        ),
-                      ),
-                    ),
+    double Width = MediaQuery.of(context).size.width;
+    double Height = MediaQuery.of(context).size.height;
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Row(
+        //mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Image(
+                    image: AssetImage("assets/img/drawer_img.jpg"),
+                    fit: BoxFit.cover,
+                    width: Width / 3,
+                    //height: Height / 5,
                   ),
-                  InkWell(
-                      onTap: () {
-                        print('ver receta');
-                      },
-                      child: ClipOval(
-                        child: Material(
-                          color: Colors.blue, // button color
-                          child: InkWell(
-                            splashColor: Colors.amber, // inkwell color
-                            child: SizedBox(
-                                width: 35,
-                                height: 35,
-                                child: Icon(Icons.library_books)),
-                            onTap: () {},
-                          ),
-                        ),
-                      )),
                 ],
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _titulo("Titulo de receta"),
-              ],
-            ),
-            Image(
-              image: AssetImage("assets/img/drawer_img.jpg"),
-              fit: BoxFit.cover,
-              width: 70,
-              height: 70,
-            ),
-          ],
-        ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _titulo("Titulo de receta"),
+                  Row(
+                    children: [
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        color: Colors.amber,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(0.0),
+                        child: Container(
+                          width: Width / 4,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 10.0),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.edit),
+                              SizedBox(width: 5),
+                              const Text('Editar',
+                                  style: TextStyle(fontSize: 15)),
+                            ],
+                          ),
+                        ),
+                        onPressed: () {
+                          // Perform some action
+                        },
+                      ),
+                      RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        color: Colors.amber,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(0.0),
+                        child: Container(
+                          width: Width / 4,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5.0, horizontal: 10.0),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.remove_red_eye),
+                              SizedBox(width: 5),
+                              const Text('Ver', style: TextStyle(fontSize: 15)),
+                            ],
+                          ),
+                        ),
+                        onPressed: () {
+                          // Perform some action
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
