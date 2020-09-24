@@ -14,19 +14,22 @@ class DrawerPage extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          UserAccountsDrawerHeader(
-            accountName: Text(user.email.substring(0, user.email.indexOf('@'))),
-            accountEmail: Text(user.email),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.blue,
-              child: Text(
-                "${user.email.substring(0, 1)}".toUpperCase(),
-                style: TextStyle(
-                  fontSize: 30,
+          user == null
+              ? Text('usuario nulo')
+              : UserAccountsDrawerHeader(
+                  accountName:
+                      Text(user.email.substring(0, user.email.indexOf('@'))),
+                  accountEmail: Text(user.email),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      "${user.email.substring(0, 1)}".toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           ListTile(
             title: Text('Inicio'),
             leading: Icon(Icons.person),
