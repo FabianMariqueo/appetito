@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
-import 'package:flutter/foundation.dart';
+import 'package:appetito/src/models/recipe.dart';
+import 'package:appetito/src/services/recipe-service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetito/src/models/user-appetito.dart';
@@ -8,9 +7,29 @@ import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
 import 'package:appetito/src/pages/recipes/recipe.dart';
 import 'package:appetito/src/pages/profile/edit_profile.dart';
 import 'package:appetito/src/pages/home/drawer.dart';
+import 'package:intl/intl.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   static String tag = '/profile';
+
+  @override
+  State<ProfilePage> createState() => _ProfilePage();
+}
+
+class _ProfilePage extends State<ProfilePage> {
+  RecipeService _recipeService = RecipeService();
+
+  //  Recetas guardadas
+  List<Recipe> _recipes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    this
+        ._recipeService
+        .myRecipes()
+        .then((response) => {this._recipes = response, setState(() {})});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +47,7 @@ class ProfilePage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(20.0),
         child: ListView(
-          children: <Widget>[
-            _infoUsuario(context),
-            _listaRecetas(context),
-            _listaRecetas(context),
-            _listaRecetas(context),
-          ],
+          children: <Widget>[_infoUsuario(context), ..._listaRecetas(context)],
         ),
       ),
       floatingActionButton: _addButton(context),
@@ -50,54 +64,77 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget _listaRecetas(BuildContext context) {
-    double Width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, RecipePage.tag);
-        },
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Image(
-                image: AssetImage("assets/img/drawer_img.jpg"),
-                fit: BoxFit.cover,
-                width: Width,
-                height: 100,
-              ),
-              ListTile(
-                //leading: Icon(Icons.edit),
-                title: _titulo("Nombre de la receta"),
-                subtitle: Row(
-                  children: <Widget>[
-                    Icon(Icons.timer),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    _descripcion("Minutos"),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Icon(Icons.local_dining),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    _descripcion("Porciones")
-                  ],
+  List<Widget> _listaRecetas(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    List<Widget> listWidget = [];
+    for (Recipe recipe in this._recipes) {
+      listWidget.add(Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, RecipePage.tag);
+          },
+          child: Card(
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                FutureBuilder<String>(
+                    future: this._recipeService.getImageUrl(
+                        recipe.imagesURL.length > 0
+                            ? recipe.imagesURL[0]
+                            : null),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done &&
+                          snapshot.data != null) {
+                        return Image(
+                          image: NetworkImage(snapshot.data),
+                          fit: BoxFit.cover,
+                          width: width,
+                          height: 100,
+                        );
+                      }
+
+                      return Image(
+                        image: AssetImage("assets/img/image_default.png"),
+                        fit: BoxFit.cover,
+                        width: width,
+                        height: 100,
+                      );
+                    }),
+                ListTile(
+                  //leading: Icon(Icons.edit),
+                  title: _titulo(recipe.name),
+                  subtitle: Row(
+                    children: <Widget>[
+                      Icon(Icons.timer),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      _descripcion(
+                          "${DateFormat("HH:mm:ss").format(recipe.preparationTime)} Minutos"),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Icon(Icons.local_dining),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      _descripcion("${recipe.portions} Porciones")
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      ));
+    }
+    return listWidget;
   }
 
   Widget _editarPerfil(BuildContext context) {
