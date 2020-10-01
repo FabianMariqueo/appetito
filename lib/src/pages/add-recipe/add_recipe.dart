@@ -17,11 +17,7 @@ class AddRecipePage extends StatefulWidget {
 
 class _AddRecipePage extends State<AddRecipePage> {
   Recipe currentRecipe = Recipe(ingredients: [""], procedures: [""]);
-  Future<PickedFile> file;
-  String status = '';
-  String base64Image;
-  PickedFile tmpFile;
-  String errMessage = 'Error Uploading Image';
+  bool _sending = false;
   // Lista de images de la receta
   List<Future<PickedFile>> listaImagenes = [];
   RecipeService _recipeService = RecipeService();

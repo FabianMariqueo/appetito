@@ -36,7 +36,7 @@ class DrawerPage extends StatelessWidget {
                 ),
           ListTile(
             title: Text('Inicio'),
-            leading: Icon(Icons.person),
+            leading: Icon(Icons.home),
             onTap: () => Navigator.pushNamed(context, HomePage.tag),
           ),
           ListTile(
