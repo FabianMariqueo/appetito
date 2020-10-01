@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AddRecipePage extends StatefulWidget {
   static String tag = "add_recipe";
@@ -103,19 +104,34 @@ class _AddRecipePage extends State<AddRecipePage> {
                   ),
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.send),
-                      SizedBox(width: 5),
-                      const Text('Guardar Receta',
-                          style: TextStyle(fontSize: 15)),
-                    ],
-                  ),
+                  child: !this._sending
+                      ? SpinKitCircle(
+                          color: Colors.white,
+                          size: 30,
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.send),
+                            SizedBox(width: 5),
+                            const Text('Guardar Receta',
+                                style: TextStyle(fontSize: 15)),
+                          ],
+                        ),
                 ),
-                onPressed: () => {
-                  this.currentRecipe.imagesFiles = this.listaImagenes,
-                  this._recipeService.addRecipe(currentRecipe)
+                onPressed: () async {
+                  setState(() {
+                    this._sending = true;
+                  });
+                  this.currentRecipe.imagesFiles = this.listaImagenes;
+                  var res = await this._recipeService.addRecipe(currentRecipe);
+                  if (res == null) {
+                    setState(() {
+                      this._sending = false;
+                    });
+                  } else {
+                    Navigator.pop(context);
+                  }
                 },
               ),
             ),

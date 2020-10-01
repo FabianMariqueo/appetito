@@ -11,14 +11,21 @@ class RecipeService {
   final firestoreInstance = FirebaseFirestore.instance;
   final firebaseStorageInstance = FirebaseStorage.instance;
 
-  addRecipe(Recipe recipe) async {
+  Future<Recipe> addRecipe(Recipe recipe) async {
     var firebaseUser = FirebaseAuth.instance.currentUser;
     recipe.userId = firebaseUser.uid;
     if (recipe.imagesFiles != null) {
       recipe.imagesURL = await saveImages(recipe.imagesFiles, recipe.userId);
     }
 
-    return firestoreInstance.collection("recipe").add(recipe.toJson());
+    try {
+      var docRecipe =
+          await firestoreInstance.collection("recipe").add(recipe.toJson());
+      recipe.id = docRecipe.id;
+      return recipe;
+    } catch (_) {
+      return null;
+    }
   }
 
   /**
