@@ -6,11 +6,18 @@ part 'user-appetito.g.dart';
 class UserAppetito {
   final String uid;
   String email;
+  @JsonKey(ignore: true)
   String password;
-  String nombre;
+  String name;
+  String description;
   String photoURL;
   UserAppetito(
-      {this.uid, this.nombre, this.email, this.photoURL, this.password});
+      {this.uid,
+      this.name,
+      this.description,
+      this.email,
+      this.photoURL,
+      this.password});
 
   factory UserAppetito.fromJson(Map<String, dynamic> json) =>
       _$UserAppetitoFromJson(json);

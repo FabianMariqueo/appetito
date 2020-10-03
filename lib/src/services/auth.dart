@@ -13,7 +13,7 @@ class AuthService {
     return user != null
         ? UserAppetito(
             uid: user.uid,
-            nombre: user.displayName,
+            name: user.displayName,
             email: user.email,
             photoURL: user.photoURL)
         : null;
@@ -37,9 +37,7 @@ class AuthService {
     }
   }
 
-  /**
-   * Login With Email and Password
-   */
+  /// Login With Email and Password
   Future signInWithEmailAndPassword(UserAppetito user) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -74,13 +72,12 @@ class AuthService {
     }
   }
 
-  /**
-   * Registrar con email y password
-   */
+  /// Registrar con email y password
   Future registerWithEmailAndPassword(UserAppetito user) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
+
       return _userFromFirebase(result.user);
     } catch (e) {
       print(e.toString());
@@ -88,9 +85,7 @@ class AuthService {
     }
   }
 
-  /**
-   * Logout
-   */
+  /// Cerrar la sesion
   Future signOut() async {
     try {
       return await _auth.signOut();
@@ -99,6 +94,4 @@ class AuthService {
       return null;
     }
   }
-
-  Future signIn() async {}
 }
