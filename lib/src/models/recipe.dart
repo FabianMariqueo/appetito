@@ -12,6 +12,7 @@ class Recipe {
   String category;
   int portions;
   DateTime preparationTime;
+  int createdAt;
   @JsonKey(ignore: true)
   List<Future<PickedFile>> imagesFiles = [];
   List<String> imagesURL = [];
