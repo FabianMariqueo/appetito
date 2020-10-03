@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appetito/src/models/recipe.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
@@ -11,9 +12,11 @@ class RecipeService {
   final firestoreInstance = FirebaseFirestore.instance;
   final firebaseStorageInstance = FirebaseStorage.instance;
 
+  ///Guardar la receta
   Future<Recipe> addRecipe(Recipe recipe) async {
     var firebaseUser = FirebaseAuth.instance.currentUser;
     recipe.userId = firebaseUser.uid;
+    recipe.createdAt = DateTime.now().millisecondsSinceEpoch;
     if (recipe.imagesFiles != null) {
       recipe.imagesURL = await saveImages(recipe.imagesFiles, recipe.userId);
     }

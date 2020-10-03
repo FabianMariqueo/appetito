@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,6 +13,7 @@ class Recipe {
   String category;
   int portions;
   DateTime preparationTime;
+  int createdAt;
   @JsonKey(ignore: true)
   List<Future<PickedFile>> imagesFiles = [];
   List<String> imagesURL = [];
