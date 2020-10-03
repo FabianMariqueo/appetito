@@ -44,11 +44,11 @@ class _ProfilePage extends State<ProfilePage> {
         ),
       ),
       drawer: DrawerPage(),
-      body: Padding(
-        padding: EdgeInsets.all(20.0),
+      body: RefreshIndicator(
         child: ListView(
           children: <Widget>[_infoUsuario(context), ..._listaRecetas(context)],
         ),
+        onRefresh: () => onRefreshList(),
       ),
       floatingActionButton: _addButton(context),
     );
@@ -233,5 +233,13 @@ class _ProfilePage extends State<ProfilePage> {
       descripcion,
       style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal),
     );
+  }
+
+/**
+ * Refrescar los datos de las recetas
+ */
+  Future<void> onRefreshList() async {
+    this._recipes = await this._recipeService.myRecipes();
+    setState(() {});
   }
 }
