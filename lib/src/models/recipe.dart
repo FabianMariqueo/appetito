@@ -9,6 +9,7 @@ class Recipe {
   String userId;
   String name;
   String description;
+  String category;
   int portions;
   DateTime preparationTime;
   @JsonKey(ignore: true)
@@ -22,6 +23,7 @@ class Recipe {
       this.userId,
       this.name,
       this.description,
+      this.category,
       this.portions,
       this.procedures,
       this.imagesFiles,

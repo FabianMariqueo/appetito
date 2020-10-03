@@ -45,6 +45,7 @@ class _AddRecipePage extends State<AddRecipePage> {
                       padding: EdgeInsets.all(8.0),
                       child: RecipeImages(listaImagenes: listaImagenes)),
                   Container(child: this._recipeTitleInput()),
+                  Container(child: this._categoryInput()),
                   Container(child: this._recipeDescription()),
                   //_recipeDetails(),
                   Container(child: this._recipePortionsInput()),
@@ -104,7 +105,7 @@ class _AddRecipePage extends State<AddRecipePage> {
                   ),
                   padding: const EdgeInsets.symmetric(
                       vertical: 10.0, horizontal: 40.0),
-                  child: !this._sending
+                  child: this._sending
                       ? SpinKitCircle(
                           color: Colors.white,
                           size: 30,
@@ -241,6 +242,44 @@ class _AddRecipePage extends State<AddRecipePage> {
                   DateFormat("HH:mm:ss").format(currentRecipe.preparationTime))
               : Icon(Icons.watch_later),
         ));
+  }
+
+  Widget _categoryInput() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+            padding: EdgeInsets.only(right: 20), child: Text("Categoría:")),
+        DropdownButton<String>(
+          value: this.currentRecipe.category,
+          icon: Icon(Icons.label_outline),
+          iconSize: 24,
+          elevation: 16,
+          style: TextStyle(color: Colors.black87),
+          hint: Text("Categoría"),
+          underline: Container(
+            height: 2,
+            color: Colors.amber,
+          ),
+          onChanged: (String newValue) {
+            setState(() {
+              this.currentRecipe.category = newValue;
+            });
+          },
+          items: <String>[
+            'Sopas y caldos',
+            'Aves y carnes',
+            'Repostería',
+            'Panes y masas'
+          ].map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        )
+      ],
+    );
   }
 
   Widget _recipeDetails() {

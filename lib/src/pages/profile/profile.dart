@@ -235,6 +235,9 @@ class _ProfilePage extends State<ProfilePage> {
     );
   }
 
+/**
+ * Refrescar los datos de las recetas
+ */
   Future<void> onRefreshList() async {
     this._recipes = await this._recipeService.myRecipes();
     setState(() {});
