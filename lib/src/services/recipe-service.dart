@@ -93,6 +93,7 @@ class RecipeService {
   }
 
   /// Obtiene todas las recetas según algun atributo
+  /// Ejemplo: fetchByAttribute("category", "Sopas y caldos")
   Future<List<Recipe>> fetchByAttribute(String attr, String matchValue) async {
     List<Recipe> recipes = [];
     // Snapchot de todas las recetas registradas

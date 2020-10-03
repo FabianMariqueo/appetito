@@ -1,5 +1,6 @@
 import 'package:appetito/src/models/recipe.dart';
 import 'package:appetito/src/services/recipe-service.dart';
+import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appetito/src/models/user-appetito.dart';
@@ -19,16 +20,20 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePage extends State<ProfilePage> {
   RecipeService _recipeService = RecipeService();
 
-  //  Recetas guardadas
+  ///  Recetas guardadas
   List<Recipe> _recipes = [];
 
+  /// Indicador para notificar cuando se terminaron de cargar las recetas
+  bool _loadingRecipes = false;
   @override
   void initState() {
+    this._loadingRecipes = true;
     super.initState();
-    this
-        ._recipeService
-        .myRecipes()
-        .then((response) => {this._recipes = response, setState(() {})});
+    this._recipeService.myRecipes().then((response) => {
+          this._recipes = response,
+          this._loadingRecipes = false,
+          setState(() {})
+        });
   }
 
   @override
@@ -67,6 +72,9 @@ class _ProfilePage extends State<ProfilePage> {
   List<Widget> _listaRecetas(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     List<Widget> listWidget = [];
+    if (this._loadingRecipes) {
+      return [Loading()];
+    }
     for (Recipe recipe in this._recipes) {
       listWidget.add(Padding(
         padding: const EdgeInsets.all(5.0),
