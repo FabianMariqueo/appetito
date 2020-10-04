@@ -54,10 +54,71 @@ class _RecipeImages extends State<RecipeImages> {
   }
 
   chooseImage() {
-    setState(() {
-      widget.listaImagenes
-          .add(ImagePicker().getImage(source: ImageSource.gallery));
-    });
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          /*  return Container(
+        decoration: new BoxDecoration(
+            color: Colors.white,
+            borderRadius: new BorderRadius.only(
+                topLeft: const Radius.circular(10.0),
+                topRight: const Radius.circular(10.0))),
+        child: new Wrap(
+          children: <Widget>[
+            new ListTile(leading: new Icon(Icons.pets,), title: Text("Mascotas"),),
+            new ListTile(leading: new Icon(Icons.home,), title: Text("Casas"),),
+            new ListTile(leading: new Icon(Icons.fastfood), title: Text("Comidas"),)
+          ],),);*/
+
+          return new Container(
+            color: Colors.transparent,
+            //could change this to Color(0xFF737373),
+            //so you don't have to change MaterialApp canvasColor
+            child: new Container(
+              decoration: new BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: new BorderRadius.only(
+                      topLeft: const Radius.circular(10.0),
+                      topRight: const Radius.circular(10.0))),
+              child: new Wrap(
+                children: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        widget.listaImagenes.add(ImagePicker()
+                            .getImage(source: ImageSource.gallery));
+                      });
+                    },
+                    child: new ListTile(
+                      leading: new Icon(
+                        Icons.image_search,
+                      ),
+                      title: Text("Seleccionar una imagen"),
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        widget.listaImagenes.add(
+                            ImagePicker().getImage(source: ImageSource.camera));
+                      });
+                    },
+                    child: new ListTile(
+                      leading: new Icon(
+                        Icons.camera,
+                      ),
+                      title: Text("Tomar una fotografía"),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+    // setState(() {
+    //   widget.listaImagenes
+    //       .add(ImagePicker().getImage(source: ImageSource.gallery));
+    // });
   }
 
   Widget showImages() {
