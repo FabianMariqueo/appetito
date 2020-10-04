@@ -4,7 +4,7 @@ part 'user-appetito.g.dart';
 
 @JsonSerializable()
 class UserAppetito {
-  final String uid;
+  String uid;
   String email;
   @JsonKey(ignore: true)
   String password;

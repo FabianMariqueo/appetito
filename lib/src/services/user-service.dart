@@ -36,4 +36,15 @@ class UserService {
       return null;
     }
   }
+
+  UserAppetito updateUser(UserAppetito user) {
+    try {
+      var firebaseUser = FirebaseAuth.instance.currentUser;
+      user.uid = firebaseUser.uid;
+      this._firestoreInstance.doc("user/${user.uid}").set(user.toJson());
+      return user;
+    } catch (_) {
+      return null;
+    }
+  }
 }

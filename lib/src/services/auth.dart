@@ -1,4 +1,5 @@
 import 'package:appetito/src/models/user-appetito.dart';
+import 'package:appetito/src/services/user-service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -53,18 +54,15 @@ class AuthService {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
-      print("google user");
-      print(googleUser);
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      print("google auth");
-      print(googleAuth);
+
       final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      print("credential");
-      print(credential);
+
       UserCredential result = await _auth.signInWithCredential(credential);
-      print("Credential user");
-      print(result.user);
+      if (!await UserService().existByUid(result.user.uid)) {
+        return UserService().addUser(_userFromFirebase(result.user));
+      }
       return _userFromFirebase(result.user);
     } catch (e) {
       print(e.toString());
@@ -75,9 +73,11 @@ class AuthService {
   /// Registrar con email y password
   Future registerWithEmailAndPassword(UserAppetito user) async {
     try {
+      user.name = user.email.split("@")[0];
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
-
+      user.uid = result.user.uid;
+      UserService().addUser(user);
       return _userFromFirebase(result.user);
     } catch (e) {
       print(e.toString());
