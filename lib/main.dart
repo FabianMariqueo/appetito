@@ -1,7 +1,6 @@
 import 'package:appetito/src/pages/app.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/shared/loading.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/routes/routes.dart';
@@ -25,15 +24,8 @@ class MyApp extends StatelessWidget {
           }
 
           // Estado listo de la application
-          // return MultiProvider(
-          //   providers: [
-          //     StreamProvider<User>.value(value: AuthService().authState),
-          //     StreamProvider<UserAppetito>.value(value: AuthService().user)
-          //   ],
-          //   child: this._mainApp(),
-          // );
-          return StreamProvider<User>.value(
-              value: AuthService().authState, child: this._mainApp());
+          return StreamProvider<UserAppetito>.value(
+              value: AuthService().user, child: this._mainApp());
         });
   }
 

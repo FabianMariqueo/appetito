@@ -1,14 +1,12 @@
 import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/app.dart';
-import 'package:appetito/src/pages/home/home.dart';
+import 'package:appetito/src/pages/authentication/welcome.dart';
+import 'package:flutter/material.dart';
+import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/pages/profile/profile.dart';
+import 'package:appetito/src/pages/home/home.dart';
 import 'package:appetito/src/pages/recipes/my_recipes.dart';
 import 'package:appetito/src/pages/recipes/saved_recipes.dart';
-import 'package:appetito/src/services/auth.dart';
-import 'package:appetito/src/services/user-service.dart';
-import 'package:appetito/src/shared/loading.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -20,26 +18,22 @@ class DrawerPage extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          user != null
-              ? UserAccountsDrawerHeader(
-                  accountName: Text(user.name),
+          user == null
+              ? Text('usuario nulo')
+              : UserAccountsDrawerHeader(
+                  accountName:
+                      Text(user.email.substring(0, user.email.indexOf('@'))),
                   accountEmail: Text(user.email),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.blue,
-                    backgroundImage: user.photoURL != null
-                        ? NetworkImage(user.photoURL)
-                        : null,
-                    child: user.photoURL == null
-                        ? Text(
-                            "${user.email.substring(0, 1)}".toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 30,
-                            ),
-                          )
-                        : null,
+                    child: Text(
+                      "${user.email.substring(0, 1)}".toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
                   ),
-                )
-              : Text(""),
+                ),
           ListTile(
             title: Text('Inicio'),
             leading: Icon(Icons.home),
@@ -75,38 +69,5 @@ class DrawerPage extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget _userDetails(Future<UserAppetito> user) {
-    return FutureBuilder<UserAppetito>(
-        future: user,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data == null) {
-              return Text('usuario nulo');
-            } else {
-              UserAppetito userDetails = snapshot.data as UserAppetito;
-              return UserAccountsDrawerHeader(
-                accountName: Text(userDetails.name),
-                accountEmail: Text(userDetails.email),
-                currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.blue,
-                  backgroundImage: userDetails.photoURL != null
-                      ? NetworkImage(userDetails.photoURL)
-                      : null,
-                  child: userDetails.photoURL == null
-                      ? Text(
-                          "${userDetails.email.substring(0, 1)}".toUpperCase(),
-                          style: TextStyle(
-                            fontSize: 30,
-                          ),
-                        )
-                      : null,
-                ),
-              );
-            }
-          }
-          return Text('usuario nulo');
-        });
   }
 }

@@ -1,5 +1,4 @@
 import 'package:appetito/src/models/user-appetito.dart';
-import 'package:appetito/src/services/user-service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -14,21 +13,19 @@ class AuthService {
     return user != null
         ? UserAppetito(
             uid: user.uid,
-            name: user.displayName,
+            nombre: user.displayName,
             email: user.email,
             photoURL: user.photoURL)
         : null;
   }
 
   Stream<UserAppetito> get user {
-    return UserService().getUser(this._auth.currentUser.uid).asStream();
+    return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
   }
 
-  Stream<User> get authState {
-    return this._auth.authStateChanges();
-  }
-
-  /// Ingresar como usuario anonimo
+  /**
+   * Ingresar como usuario anonimo
+   */
   Future signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
@@ -40,7 +37,9 @@ class AuthService {
     }
   }
 
-  /// Login With Email and Password
+  /**
+   * Login With Email and Password
+   */
   Future signInWithEmailAndPassword(UserAppetito user) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -56,15 +55,18 @@ class AuthService {
     try {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
 
+      print("google user");
+      print(googleUser);
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
+      print("google auth");
+      print(googleAuth);
       final AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-
+      print("credential");
+      print(credential);
       UserCredential result = await _auth.signInWithCredential(credential);
-      if (!await UserService().existByUid(result.user.uid)) {
-        return UserService().addUser(await _userFromFirebase(result.user));
-      }
+      print("Credential user");
+      print(result.user);
       return _userFromFirebase(result.user);
     } catch (e) {
       print(e.toString());
@@ -72,14 +74,13 @@ class AuthService {
     }
   }
 
-  /// Registrar con email y password
+  /**
+   * Registrar con email y password
+   */
   Future registerWithEmailAndPassword(UserAppetito user) async {
     try {
-      user.name = user.email.split("@")[0];
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
-      user.uid = result.user.uid;
-      UserService().addUser(user);
       return _userFromFirebase(result.user);
     } catch (e) {
       print(e.toString());
@@ -87,7 +88,9 @@ class AuthService {
     }
   }
 
-  /// Cerrar la sesion
+  /**
+   * Logout
+   */
   Future signOut() async {
     try {
       return await _auth.signOut();
@@ -96,4 +99,6 @@ class AuthService {
       return null;
     }
   }
+
+  Future signIn() async {}
 }
