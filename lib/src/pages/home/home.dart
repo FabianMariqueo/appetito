@@ -1,16 +1,23 @@
+import 'package:appetito/src/models/recipe.dart';
 import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
 import 'package:appetito/src/pages/home/drawer.dart';
 import 'package:appetito/src/pages/recipes/recipe.dart';
+import 'package:appetito/src/services/recipe-service.dart';
+import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   static String tag = '/home';
 
+  /// Servicio para hacer consiultas a firebase
+  final RecipeService _recipeService = new RecipeService();
+
   @override
   Widget build(BuildContext context) {
-    // Datos del usuario logeado
+    /// Datos del usuario logeado
     final user = Provider.of<UserAppetito>(context);
 
     return Scaffold(
@@ -65,56 +72,81 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _ultimaReceta(BuildContext context) {
-    double Width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, RecipePage.tag);
-        },
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Image(
-                image: AssetImage("assets/img/drawer_img.jpg"),
-                fit: BoxFit.cover,
-                width: Width,
-                height: 100,
-              ),
-              ListTile(
-                title: _tituloreceta("Titulo de receta"),
-                subtitle: Row(
-                  children: <Widget>[
-                    Icon(Icons.timer),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    _descripcion("Minutos"),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text('|'),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Icon(Icons.local_dining),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    _descripcion("Porciones")
-                  ],
+    double width = MediaQuery.of(context).size.width;
+    return FutureBuilder(
+        future: this._recipeService.getLastPosted(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            Recipe recipe = snapshot.data as Recipe;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, RecipePage.tag);
+                },
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      FutureBuilder<String>(
+                          future: this._recipeService.getImageUrl(
+                              recipe.imagesURL.length > 0
+                                  ? recipe.imagesURL[0]
+                                  : null),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.data != null) {
+                              return Image(
+                                image: NetworkImage(snapshot.data),
+                                fit: BoxFit.cover,
+                                width: width,
+                                height: 100,
+                              );
+                            }
+
+                            return Image(
+                              image: AssetImage("assets/img/image_default.png"),
+                              fit: BoxFit.cover,
+                              width: width,
+                              height: 100,
+                            );
+                          }),
+                      ListTile(
+                        title: _tituloreceta(recipe.name),
+                        subtitle: Row(
+                          children: <Widget>[
+                            Icon(Icons.timer),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            _descripcion(
+                                "${DateFormat("HH:mm:ss").format(recipe.preparationTime)} Minutos"),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(Icons.local_dining),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            _descripcion("${recipe.portions} Porciones")
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          }
+
+          return Loading();
+        });
   }
 
   Widget _titulo(String titulo) {

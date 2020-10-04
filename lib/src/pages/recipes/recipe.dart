@@ -1,6 +1,5 @@
 import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
-import 'package:appetito/src/pages/home/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
