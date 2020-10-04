@@ -20,9 +20,8 @@ class AuthService {
         : null;
   }
 
-  Stream<Future<UserAppetito>> get user {
-    return _auth.authStateChanges().map(
-        (User user) => user != null ? UserService().getUser(user.uid) : null);
+  Stream<UserAppetito> get user {
+    return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
   }
 
   /**
@@ -62,7 +61,7 @@ class AuthService {
 
       UserCredential result = await _auth.signInWithCredential(credential);
       if (!await UserService().existByUid(result.user.uid)) {
-        return UserService().addUser(await _userFromFirebase(result.user));
+        return UserService().addUser(_userFromFirebase(result.user));
       }
       return _userFromFirebase(result.user);
     } catch (e) {

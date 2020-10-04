@@ -16,7 +16,7 @@ class DrawerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Future<UserAppetito>>(context);
+    final user = Provider.of<UserAppetito>(context);
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -58,9 +58,9 @@ class DrawerPage extends StatelessWidget {
     );
   }
 
-  Widget _userDetails(Future<UserAppetito> user) {
-    return FutureBuilder<UserAppetito>(
-        future: user,
+  Widget _userDetails(UserAppetito user) {
+    return FutureBuilder(
+        future: UserService().getUser(user.uid),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.data == null) {
@@ -77,7 +77,7 @@ class DrawerPage extends StatelessWidget {
                       : null,
                   child: userDetails.photoURL == null
                       ? Text(
-                          "${userDetails.email.substring(0, 1)}".toUpperCase(),
+                          "${user.email.substring(0, 1)}".toUpperCase(),
                           style: TextStyle(
                             fontSize: 30,
                           ),
@@ -87,7 +87,19 @@ class DrawerPage extends StatelessWidget {
               );
             }
           }
-          return Text('usuario nulo');
+          return UserAccountsDrawerHeader(
+            accountName: Text(user.email.substring(0, user.email.indexOf('@'))),
+            accountEmail: Text(user.email),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.blue,
+              child: Text(
+                "${user.email.substring(0, 1)}".toUpperCase(),
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            ),
+          );
         });
   }
 }
