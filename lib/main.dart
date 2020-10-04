@@ -1,6 +1,7 @@
 import 'package:appetito/src/pages/app.dart';
 import 'package:appetito/src/services/auth.dart';
 import 'package:appetito/src/shared/loading.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:appetito/src/routes/routes.dart';

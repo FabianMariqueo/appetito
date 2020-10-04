@@ -24,9 +24,11 @@ class AuthService {
     return _auth.authStateChanges().map((User user) => _userFromFirebase(user));
   }
 
-  /**
-   * Ingresar como usuario anonimo
-   */
+  Stream<User> get authState {
+    return this._auth.authStateChanges();
+  }
+
+  /// Ingresar como usuario anonimo
   Future signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
