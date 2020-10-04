@@ -21,9 +21,11 @@ class AuthService {
   }
 
   Stream<UserAppetito> get user {
-    return this._auth.currentUser != null
-        ? UserService().getUser(this._auth.currentUser.uid).asStream()
-        : null;
+    return UserService().getUser(this._auth.currentUser.uid).asStream();
+  }
+
+  Stream<User> get authState {
+    return this._auth.authStateChanges();
   }
 
   /// Ingresar como usuario anonimo
