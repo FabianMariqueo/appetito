@@ -15,7 +15,7 @@ class AppPage extends StatelessWidget {
     // Datos del usuario logeado
     final user = Provider.of<UserAppetito>(context);
 
-    if (authUser == null) {
+    if (user == null) {
       return Authentication();
     } else {
       return StreamProvider<UserAppetito>.value(
