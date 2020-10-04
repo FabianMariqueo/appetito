@@ -20,14 +20,13 @@ class AuthService {
         : null;
   }
 
-  Stream<Future<UserAppetito>> get user {
-    return _auth.authStateChanges().map(
-        (User user) => user != null ? UserService().getUser(user.uid) : null);
+  Stream<UserAppetito> get user {
+    return this._auth.currentUser != null
+        ? UserService().getUser(this._auth.currentUser.uid).asStream()
+        : null;
   }
 
-  /**
-   * Ingresar como usuario anonimo
-   */
+  /// Ingresar como usuario anonimo
   Future signInAnon() async {
     try {
       UserCredential result = await _auth.signInAnonymously();

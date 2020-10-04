@@ -10,7 +10,7 @@ class AppPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Datos del usuario logeado
-    final user = Provider.of<Future<UserAppetito>>(context);
+    final user = Provider.of<UserAppetito>(context);
 
     if (user == null) {
       return Authentication();
