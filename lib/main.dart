@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           }
 
           // Estado listo de la application
-          return StreamProvider<UserAppetito>.value(
+          return StreamProvider<Future<UserAppetito>>.value(
               value: AuthService().user, child: this._mainApp());
         });
   }

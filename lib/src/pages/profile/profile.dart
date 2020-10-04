@@ -173,36 +173,46 @@ class _ProfilePage extends State<ProfilePage> {
   }
 
   Widget _infoUsuario(BuildContext context) {
-    final user = Provider.of<UserAppetito>(context);
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Colors.blue,
-            child: Text(
-              user != null ? "${user.email.substring(0, 1)}".toUpperCase() : "",
-              style: TextStyle(
-                fontSize: 30,
+    final futureUser = Provider.of<Future<UserAppetito>>(context);
+    return FutureBuilder(
+        future: futureUser,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            var user = snapshot.data;
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      user != null
+                          ? "${user.email.substring(0, 1)}".toUpperCase()
+                          : "",
+                      style: TextStyle(
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      user != null
+                          ? _estilonombre(
+                              user.email.substring(0, user.email.indexOf('@')))
+                          : Text(""),
+                      _estilodescripcion("usuario de appetito"),
+                      _editarPerfil(context),
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              user != null
-                  ? _estilonombre(
-                      user.email.substring(0, user.email.indexOf('@')))
-                  : Text(""),
-              _estilodescripcion("usuario de appetito"),
-              _editarPerfil(context),
-            ],
-          ),
-        ],
-      ),
-    );
+            );
+          }
+          return Text("null");
+        });
   }
 
   Widget _estilonombre(String titulo) {

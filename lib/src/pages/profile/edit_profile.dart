@@ -32,88 +32,106 @@ class EditProfilePage extends StatelessWidget {
   }
 
   Widget _contenido(BuildContext context) {
-    final user = Provider.of<UserAppetito>(context);
+    final futureUser = Provider.of<Future<UserAppetito>>(context);
     double Width = MediaQuery.of(context).size.width;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 30),
-            Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.blue,
-                  child: Text(
-                    "${user.email.substring(0, 1)}".toUpperCase(),
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
+    return FutureBuilder(
+        future: futureUser,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            var user = snapshot.data;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.black38,
-                ),
-                InkWell(
-                  onTap: () => {print("editar foto")},
-                  child: Container(
-                    child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                  ),
-                ),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 30),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundColor: Colors.blue,
+                          child: Text(
+                            "${user.email.substring(0, 1)}".toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 30,
+                            ),
+                          ),
+                        ),
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundColor: Colors.black38,
+                        ),
+                        InkWell(
+                          onTap: () => {print("editar foto")},
+                          child: Container(
+                            child: Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                          ),
+                        ),
 /*                 InkWell(onTap: () {
                   print("hola");
                 }), */
-              ],
-            ),
-            SizedBox(height: 30),
-            _editarNombre(context),
-            SizedBox(height: 30),
-            _editardescripcion(context),
-            SizedBox(height: 30),
-            _guardarCambios(context),
-            SizedBox(height: 30),
-          ],
-        ),
-      ),
-    );
+                      ],
+                    ),
+                    SizedBox(height: 30),
+                    _editarNombre(context),
+                    SizedBox(height: 30),
+                    _editardescripcion(context),
+                    SizedBox(height: 30),
+                    _guardarCambios(context),
+                    SizedBox(height: 30),
+                  ],
+                ),
+              ),
+            );
+          }
+          return Text("null");
+        });
   }
 
   Widget _editarNombre(BuildContext context) {
-    final user = Provider.of<UserAppetito>(context);
-    return Container(
-      child: Theme(
-        data: Theme.of(context).copyWith(splashColor: Colors.transparent),
-        child: Container(
-          padding: EdgeInsets.only(right: 30, left: 30),
-          child: TextFormField(
-            initialValue: user.email.substring(0, user.email.indexOf('@')),
-            autofocus: false,
-            style: TextStyle(fontSize: 15.0, color: Colors.grey),
-            decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-              labelText: 'Nombre',
-              isDense: true, // Added this
-            ),
-          ),
-        ),
-      ),
-    );
+    final futureUser = Provider.of<Future<UserAppetito>>(context);
+    return FutureBuilder<UserAppetito>(
+        future: futureUser,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            var user = snapshot.data;
+            return Container(
+              child: Theme(
+                data:
+                    Theme.of(context).copyWith(splashColor: Colors.transparent),
+                child: Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  child: TextFormField(
+                    initialValue:
+                        user.email.substring(0, user.email.indexOf('@')),
+                    autofocus: false,
+                    style: TextStyle(fontSize: 15.0, color: Colors.grey),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      labelText: 'Nombre',
+                      isDense: true, // Added this
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }
+          return Text("null");
+        });
   }
 
   Widget _editardescripcion(BuildContext context) {
-    final user = Provider.of<UserAppetito>(context);
+    final user = Provider.of<Future<UserAppetito>>(context);
     return Container(
       child: Theme(
         data: Theme.of(context).copyWith(splashColor: Colors.transparent),
