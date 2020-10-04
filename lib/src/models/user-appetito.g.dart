@@ -9,10 +9,10 @@ part of 'user-appetito.dart';
 UserAppetito _$UserAppetitoFromJson(Map<String, dynamic> json) {
   return UserAppetito(
     uid: json['uid'] as String,
-    nombre: json['nombre'] as String,
+    name: json['name'] as String,
+    description: json['description'] as String,
     email: json['email'] as String,
     photoURL: json['photoURL'] as String,
-    password: json['password'] as String,
   );
 }
 
@@ -20,7 +20,7 @@ Map<String, dynamic> _$UserAppetitoToJson(UserAppetito instance) =>
     <String, dynamic>{
       'uid': instance.uid,
       'email': instance.email,
-      'password': instance.password,
-      'nombre': instance.nombre,
+      'name': instance.name,
+      'description': instance.description,
       'photoURL': instance.photoURL,
     };
