@@ -4,20 +4,13 @@ part 'user-appetito.g.dart';
 
 @JsonSerializable()
 class UserAppetito {
-  String uid;
+  final String uid;
   String email;
-  @JsonKey(ignore: true)
   String password;
-  String name;
-  String description;
+  String nombre;
   String photoURL;
   UserAppetito(
-      {this.uid,
-      this.name,
-      this.description,
-      this.email,
-      this.photoURL,
-      this.password});
+      {this.uid, this.nombre, this.email, this.photoURL, this.password});
 
   factory UserAppetito.fromJson(Map<String, dynamic> json) =>
       _$UserAppetitoFromJson(json);

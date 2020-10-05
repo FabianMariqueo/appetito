@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:appetito/src/models/recipe.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 
 class RecipeService {
-  final _firestoreInstance = FirebaseFirestore.instance;
-  final _firebaseStorageInstance = FirebaseStorage.instance;
+  final firestoreInstance = FirebaseFirestore.instance;
+  final firebaseStorageInstance = FirebaseStorage.instance;
 
   ///Guardar la receta
   Future<Recipe> addRecipe(Recipe recipe) async {
@@ -23,9 +24,9 @@ class RecipeService {
     try {
       // Guardar la receta en firestore
       var docRecipe =
-          await _firestoreInstance.collection("recipe").add(recipe.toJson());
+          await firestoreInstance.collection("recipe").add(recipe.toJson());
       // Actualizar el id de la receta en firestore
-      _firestoreInstance
+      firestoreInstance
           .doc("recipe/${docRecipe.id}")
           .update({"id": docRecipe.id});
       // Actualizar el id de la receta en local
@@ -61,7 +62,7 @@ class RecipeService {
     List<Recipe> recipes = [];
     // Snapchot de todas las recetas registradas
     QuerySnapshot snapRecipes =
-        await _firestoreInstance.collection("recipe").get();
+        await firestoreInstance.collection("recipe").get();
 
     // Iterar cada documento de firebase para construir los objetos locales
     for (QueryDocumentSnapshot recipeDoc in snapRecipes.docs) {
@@ -77,7 +78,7 @@ class RecipeService {
     var firebaseUser = FirebaseAuth.instance.currentUser;
     List<Recipe> recipes = [];
     // Snapchot de todas las recetas registradas
-    QuerySnapshot snapRecipes = await _firestoreInstance
+    QuerySnapshot snapRecipes = await firestoreInstance
         .collection("recipe")
         .where("userId", isEqualTo: firebaseUser.uid)
         .get();
@@ -96,7 +97,7 @@ class RecipeService {
   Future<List<Recipe>> fetchByAttribute(String attr, String matchValue) async {
     List<Recipe> recipes = [];
     // Snapchot de todas las recetas registradas
-    QuerySnapshot snapRecipes = await _firestoreInstance
+    QuerySnapshot snapRecipes = await firestoreInstance
         .collection("recipe")
         .where(attr, isEqualTo: matchValue)
         .get();
@@ -114,7 +115,7 @@ class RecipeService {
   Future<Recipe> getById(String recipeId) async {
     // Snapchot de todas las recetas registradas
     DocumentSnapshot snapRecipe =
-        await _firestoreInstance.doc("recipe/$recipeId").get();
+        await firestoreInstance.doc("recipe/$recipeId").get();
     return Recipe.fromJson(snapRecipe.data());
   }
 
@@ -132,7 +133,7 @@ class RecipeService {
 
   /// Obtiene la URL de descarga para la imagen especificada
   Future<String> getImageUrl(String storageUrl) async {
-    var storageRef = this._firebaseStorageInstance.ref().child(storageUrl);
+    var storageRef = this.firebaseStorageInstance.ref().child(storageUrl);
     try {
       var url = await storageRef.getDownloadURL();
       return url as String;
@@ -146,7 +147,7 @@ class RecipeService {
     List<String> downloadUrls = [];
     try {
       for (String url in storageUrls) {
-        var storageRef = this._firebaseStorageInstance.ref().child(url);
+        var storageRef = this.firebaseStorageInstance.ref().child(url);
         downloadUrls.add(await storageRef.getDownloadURL());
       }
       return downloadUrls;
