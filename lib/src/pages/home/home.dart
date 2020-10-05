@@ -3,6 +3,7 @@ import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
 import 'package:appetito/src/pages/home/drawer.dart';
 import 'package:appetito/src/pages/recipes/recipe.dart';
+import 'package:appetito/src/pages/recipes/recipes_category.dart';
 import 'package:appetito/src/services/recipe-service.dart';
 import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -200,6 +201,14 @@ class HomePage extends StatelessWidget {
           //para poder hacer tap en la categoria
           onTap: () {
             print(nombrecategoria);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RecipesCategory(
+                    title: nombrecategoria,
+                    category: nombrecategoria,
+                  ),
+                ));
           },
           child: Container(
               alignment: Alignment.center,
