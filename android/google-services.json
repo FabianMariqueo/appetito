@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "217636819554",
+    "firebase_url": "https://app-ttm-ae009.firebaseio.com",
+    "project_id": "app-ttm-ae009",
+    "storage_bucket": "app-ttm-ae009.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217636819554:android:4d8e478c763e08270ff73b",
+        "android_client_info": {
+          "package_name": "cl.ufro.appetito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217636819554-0r7t0g1cbpi0jgksltkoebok69rr1dve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCG3zcHKJJb3E6zGxCRrPsnCIHIokgVt5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217636819554-0r7t0g1cbpi0jgksltkoebok69rr1dve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
