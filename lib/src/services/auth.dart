@@ -65,8 +65,9 @@ class AuthService {
       print("credential");
       print(credential);
       UserCredential result = await _auth.signInWithCredential(credential);
-      print("Credential user");
-      print(result.user);
+      if (!await UserService().existByUid(result.user.uid)) {
+        return UserService().addUser(_userFromFirebase(result.user));
+      }
       return _userFromFirebase(result.user);
     } catch (e) {
       print(e.toString());

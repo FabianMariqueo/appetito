@@ -119,6 +119,18 @@ class RecipeService {
     return Recipe.fromJson(snapRecipe.data());
   }
 
+  /// Obtiene la última receta publicada
+  Future<Recipe> getLastPosted() async {
+    try {
+      Query query =
+          _firestoreInstance.collection("recipe").orderBy("createdAt").limit(1);
+      QuerySnapshot querySnap = await query.get();
+      return Recipe.fromJson(querySnap.docs[0].data());
+    } catch (_) {
+      return null;
+    }
+  }
+
   /// Obtiene la URL de descarga para la imagen especificada
   Future<String> getImageUrl(String storageUrl) async {
     var storageRef = this.firebaseStorageInstance.ref().child(storageUrl);

@@ -2,6 +2,7 @@ import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/authentication/authentication.dart';
 import 'package:appetito/src/pages/authentication/welcome.dart';
 import 'package:appetito/src/pages/home/home.dart';
+import 'package:appetito/src/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

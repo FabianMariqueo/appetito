@@ -70,4 +70,49 @@ class DrawerPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget _userDetails(UserAppetito user) {
+    return FutureBuilder(
+        future: UserService().getUser(user.uid),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data == null) {
+              return Text('usuario nulo');
+            } else {
+              UserAppetito userDetails = snapshot.data as UserAppetito;
+              return UserAccountsDrawerHeader(
+                accountName: Text(userDetails.name),
+                accountEmail: Text(userDetails.email),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.blue,
+                  backgroundImage: userDetails.photoURL != null
+                      ? NetworkImage(userDetails.photoURL)
+                      : null,
+                  child: userDetails.photoURL == null
+                      ? Text(
+                          "${user.email.substring(0, 1)}".toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),
+                        )
+                      : null,
+                ),
+              );
+            }
+          }
+          return UserAccountsDrawerHeader(
+            accountName: Text(user.email.substring(0, user.email.indexOf('@'))),
+            accountEmail: Text(user.email),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.blue,
+              child: Text(
+                "${user.email.substring(0, 1)}".toUpperCase(),
+                style: TextStyle(
+                  fontSize: 30,
+                ),
+              ),
+            ),
+          );
+        });
+  }
 }

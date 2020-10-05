@@ -1,8 +1,5 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:appetito/src/models/user-appetito.dart';
 import 'package:appetito/src/pages/home/drawer.dart';
+import 'package:flutter/material.dart';
 
 class MyRecipesPage extends StatelessWidget {
   static String tag = '/myrecipes';
