@@ -22,7 +22,7 @@ class DrawerPage extends StatelessWidget {
         children: <Widget>[
           user != null
               ? UserAccountsDrawerHeader(
-                  accountName: Text(user.name),
+                  accountName: Text(user.name ?? ""),
                   accountEmail: Text(user.email),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.blue,
