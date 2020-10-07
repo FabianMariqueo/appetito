@@ -121,9 +121,12 @@ class RecipeService {
   /// Obtiene la última receta publicada
   Future<Recipe> getLastPosted() async {
     try {
-      Query query =
-          _firestoreInstance.collection("recipe").orderBy("createdAt").limit(1);
+      Query query = _firestoreInstance
+          .collection("recipe")
+          .orderBy("createdAt", descending: true)
+          .limit(1);
       QuerySnapshot querySnap = await query.get();
+      print(Recipe.fromJson(querySnap.docs[0].data()).name);
       return Recipe.fromJson(querySnap.docs[0].data());
     } catch (_) {
       return null;
