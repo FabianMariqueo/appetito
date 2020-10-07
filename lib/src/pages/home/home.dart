@@ -100,6 +100,7 @@ class HomePage extends StatelessWidget {
                                   : null),
                           builder: (BuildContext context,
                               AsyncSnapshot<String> snapshot) {
+                            //print(recipe.name);
                             if (snapshot.connectionState ==
                                     ConnectionState.done &&
                                 snapshot.data != null) {
