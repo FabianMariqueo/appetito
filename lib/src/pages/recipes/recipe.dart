@@ -218,7 +218,9 @@ class _RecipePage extends State<RecipePage> {
                 ),
               ),
               _tituloreceta("Ingredientes"),
-              _tituloreceta("Procedimiento")
+              ...recipe.ingredients.map((e) => _descripcioningrediente(e)),
+              _tituloreceta("Procedimiento"),
+              ...recipe.procedures.map((e) => _descripcionprocedimiento(e)),
             ],
           ),
         ),
