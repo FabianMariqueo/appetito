@@ -77,7 +77,7 @@ class _RecipePage extends State<RecipePage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Icon(
@@ -85,11 +85,13 @@ class _RecipePage extends State<RecipePage> {
             size: 10.0,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 20.0, top: 5.0, bottom: 5.0),
-          child: Text(
-            descripcion,
-            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20.0, top: 5.0, bottom: 5.0),
+            child: Text(
+              descripcion,
+              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+            ),
           ),
         ),
       ],
@@ -108,11 +110,13 @@ class _RecipePage extends State<RecipePage> {
             size: 15.0,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 20.0, top: 5.0, bottom: 5.0),
-          child: Text(
-            descripcion,
-            style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 20.0, top: 5.0, bottom: 5.0),
+            child: Text(
+              descripcion,
+              style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+            ),
           ),
         ),
       ],
@@ -163,7 +167,6 @@ class _RecipePage extends State<RecipePage> {
     }
     double width = MediaQuery.of(context).size.width;
     List<Widget> listWidget = [];
-    print(widget.title + "hola");
     for (var recipe in this._recipes) {
       listWidget.add(Padding(
         padding: const EdgeInsets.all(10),
