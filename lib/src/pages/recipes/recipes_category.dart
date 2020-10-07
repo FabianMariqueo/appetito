@@ -1,5 +1,6 @@
 import 'package:appetito/src/models/recipe.dart';
 import 'package:appetito/src/pages/add-recipe/add_recipe.dart';
+import 'package:appetito/src/pages/recipes/recipe.dart';
 import 'package:appetito/src/services/recipe-service.dart';
 import 'package:appetito/src/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,13 @@ class _RecipesCategory extends State<RecipesCategory> {
         child: InkWell(
           onTap: () {
             print(recipe.name);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RecipePage(
+                    title: recipe.name,
+                  ),
+                ));
           },
           child: Card(
             clipBehavior: Clip.antiAlias,
