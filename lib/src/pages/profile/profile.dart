@@ -80,7 +80,13 @@ class _ProfilePage extends State<ProfilePage> {
         padding: const EdgeInsets.all(5.0),
         child: InkWell(
           onTap: () {
-            Navigator.pushNamed(context, RecipePage.tag);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RecipePage(
+                    title: recipe.name,
+                  ),
+                ));
           },
           child: Card(
             clipBehavior: Clip.antiAlias,

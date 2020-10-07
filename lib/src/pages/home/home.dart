@@ -83,7 +83,13 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 20),
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, RecipePage.tag);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RecipePage(
+                          title: recipe.name,
+                        ),
+                      ));
                 },
                 child: Card(
                   clipBehavior: Clip.antiAlias,
